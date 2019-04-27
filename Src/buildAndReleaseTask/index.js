@@ -7,19 +7,69 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const tl = require("azure-pipelines-task-lib/task");
+const tl = __importStar(require("azure-pipelines-task-lib/task"));
+const WebRequest = __importStar(require("web-request"));
+const domino = __importStar(require("domino"));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        // Start timing now
         console.time("Execution time");
         try {
-            const inputString = tl.getInput('samplestring', true);
-            if (inputString == 'bad') {
-                tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
-                return;
+            const sitemapURL = tl.getInput('sitemapURL', true);
+            // TODO: Validate the URL using a helper method and use the below logic to throw an error
+            // if (inputString == 'bad') {
+            //     tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
+            //     return;
+            // }
+            console.log('Sitemap file:', sitemapURL);
+            // Makes a request to the sitemap file and creates a virtual document
+            var sitemapXHRResult = yield WebRequest.get(sitemapURL);
+            var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
+            var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
+            console.log('Sitemap file LENGTH:', allPagesInSitemap.length);
+            // Loop thru all pages found in the sitemap file
+            for (var i = 0; i < allPagesInSitemap.length; i++) {
+                // TODO: Check if we need to exclude the URL. Example: .pdf URL
+                // if (allPagesInSitemap[i].innerHTML.toString()) {
+                //     continue;
+                // }
+                var currentURL = allPagesInSitemap[i].innerHTML;
+                console.log("URL:", currentURL);
+                // Makes a request to the sitemap file and creates a virtual document
+                var currentURLXHRResult = yield WebRequest.get(currentURL);
+                var virtualDocument = domino.createWindow(currentURLXHRResult.content).document;
+                // Title 
+                var titleTag = virtualDocument.querySelectorAll('title');
+                // Loop thru all meta tags
+                var metaTags = virtualDocument.querySelectorAll('meta');
+                for (var im = 0; im < metaTags.length; im++) {
+                    var nameAttribute = metaTags[im].getAttribute('name');
+                    var propertyAttribute = metaTags[im].getAttribute('property');
+                    var isNameMetatag = nameAttribute != "" && nameAttribute != null;
+                    var isPropertyMetatag = propertyAttribute != "" && propertyAttribute != null;
+                    // Example: <meta name="description" content="Lorem ipsum">
+                    if (isNameMetatag) {
+                        if (nameAttribute == "title" || nameAttribute == "description") {
+                            var nameAttributeContent = metaTags[im].getAttribute('content');
+                            console.log("   ", nameAttribute, "=", nameAttributeContent);
+                        }
+                    }
+                    //Example: <meta property="og:type" content="website">
+                    if (isPropertyMetatag) {
+                        if (propertyAttribute == "og:type" || propertyAttribute == "og:url") {
+                            var propertyAttributeContent = metaTags[im].getAttribute('content');
+                            console.log("   ", propertyAttribute, "=", propertyAttributeContent);
+                        }
+                    }
+                }
             }
-            console.log('Hello', inputString);
         }
         catch (err) {
             tl.setResult(tl.TaskResult.Failed, err.message);

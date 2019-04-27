@@ -14,12 +14,12 @@
     "instanceNameFormat": "Meta Tag Analyzer",
     "inputs": [
         {
-            "name": "samplestring",
+            "name": "sitemapURL",
             "type": "string",
-            "label": "Sample String",
+            "label": "Sitemap URL",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "A sample string"
+            "helpMarkDown": "Full URL of the sitemap file. Sitemap file must be of `.xml` file extension."
         }
     ],
     "execution": {
