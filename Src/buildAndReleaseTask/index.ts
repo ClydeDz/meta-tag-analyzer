@@ -13,7 +13,7 @@ async function run() {
         const sitemapURL: string = tl.getInput('sitemapURL', true);
         
         // Validate the URL
-        if (!taskHelper.isURLValid(sitemapURL)) {
+        if (!taskHelper.isSitemapURLValid(sitemapURL)) {
             tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
             return;
         }
@@ -28,10 +28,10 @@ async function run() {
 
         // Loop thru all pages found in the sitemap file
         for (var i = 0; i < allPagesInSitemap.length; i++) {
-            // TODO: Check if we need to exclude the URL. Example: .pdf URL
-            // if (allPagesInSitemap[i].innerHTML.toString()) {
-            //     continue;
-            // }
+            // Check if we need to exclude URLs. Example: .pdf
+            if (!taskHelper.isPageURLValid(allPagesInSitemap[i].innerHTML)) {
+                continue;
+            }
             
             var currentURL = allPagesInSitemap[i].innerHTML;
             console.log("URL:", currentURL);

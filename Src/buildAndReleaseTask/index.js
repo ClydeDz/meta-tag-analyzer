@@ -26,21 +26,22 @@ function run() {
         try {
             const sitemapURL = tl.getInput('sitemapURL', true);
             // Validate the URL
-            if (!taskHelper.isURLValid(sitemapURL)) {
+            if (!taskHelper.isSitemapURLValid(sitemapURL)) {
                 tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
                 return;
             }
             console.log('Sitemap file:', sitemapURL);
+            console.log("=========================");
             // Makes a request to the sitemap file and creates a virtual document
             var sitemapXHRResult = yield WebRequest.get(sitemapURL);
             var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
             var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
             // Loop thru all pages found in the sitemap file
             for (var i = 0; i < allPagesInSitemap.length; i++) {
-                // TODO: Check if we need to exclude the URL. Example: .pdf URL
-                // if (allPagesInSitemap[i].innerHTML.toString()) {
-                //     continue;
-                // }
+                // Check if we need to exclude URLs. Example: .pdf
+                if (!taskHelper.isPageURLValid(allPagesInSitemap[i].innerHTML)) {
+                    continue;
+                }
                 var currentURL = allPagesInSitemap[i].innerHTML;
                 console.log("URL:", currentURL);
                 console.log("-----------------");

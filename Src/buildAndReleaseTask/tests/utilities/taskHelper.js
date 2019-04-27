@@ -10,22 +10,43 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const assert = __importStar(require("assert"));
 const taskHelper_1 = require("../../utilities/taskHelper");
 //_________________________________________________________________________________
-describe('utilities / taskHelper / isURLValid', function () {
+describe('utilities / taskHelper / isSitemapURLValid', function () {
     it('should succeed with valid URLs', function (done) {
         this.timeout(1000);
         const taskHelper = new taskHelper_1.TaskHelper();
-        var isValidURL = taskHelper.isURLValid("https://raw.githubusercontent.com/ClydeDz/meta-tag-analyzer/master/Sample/sitemap.xml");
+        var isValidURL = taskHelper.isSitemapURLValid("https://raw.githubusercontent.com/ClydeDz/meta-tag-analyzer/master/Sample/sitemap.xml");
         assert.equal(isValidURL, true, 'should have succeeded');
-        isValidURL = taskHelper.isURLValid("https://profilesticker.net/sitemap.xml");
+        isValidURL = taskHelper.isSitemapURLValid("https://profilesticker.net/sitemap.xml");
         assert.equal(isValidURL, true, 'should have succeeded');
         done();
     });
     it('should fail with invalid URLs', function (done) {
         this.timeout(1000);
         const taskHelper = new taskHelper_1.TaskHelper();
-        var isValidURL = taskHelper.isURLValid("https://raw.githubusercontent.com/ClydeDz/meta-tag-analyzer/");
+        var isValidURL = taskHelper.isSitemapURLValid("https://raw.githubusercontent.com/ClydeDz/meta-tag-analyzer/");
         assert.equal(isValidURL, false, 'should have succeeded');
-        isValidURL = taskHelper.isURLValid("https://profilesticker.net/sitemap.txt");
+        isValidURL = taskHelper.isSitemapURLValid("https://profilesticker.net/sitemap.txt");
+        assert.equal(isValidURL, false, 'should have succeeded');
+        done();
+    });
+});
+//_________________________________________________________________________________
+describe('utilities / taskHelper / isPageURLValid', function () {
+    it('should succeed with valid URLs', function (done) {
+        this.timeout(1000);
+        const taskHelper = new taskHelper_1.TaskHelper();
+        var isValidURL = taskHelper.isPageURLValid("https://clydedz.github.io/sass-snippet-pack/");
+        assert.equal(isValidURL, true, 'should have succeeded');
+        isValidURL = taskHelper.isPageURLValid("https://profilesticker.net/about");
+        assert.equal(isValidURL, true, 'should have succeeded');
+        done();
+    });
+    it('should fail with invalid URLs', function (done) {
+        this.timeout(1000);
+        const taskHelper = new taskHelper_1.TaskHelper();
+        var isValidURL = taskHelper.isPageURLValid("https://clydedz.github.io/sass-snippet-pack/content.pdf");
+        assert.equal(isValidURL, false, 'should have succeeded');
+        isValidURL = taskHelper.isPageURLValid("https://profilesticker.net/dummy.pdf");
         assert.equal(isValidURL, false, 'should have succeeded');
         done();
     });
