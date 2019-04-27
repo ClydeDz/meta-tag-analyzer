@@ -97,6 +97,20 @@ export class TaskHelper {
         return false;
     };
 
+    printPageURL(url: string){
+        console.log("");
+        console.log("----------------------------------");
+        console.log("URL:", url);
+        console.log("----------------------------------");
+    }
+
+    printSitemapFileURL(url: string){
+        console.log("");
+        console.log("==================================================");
+        console.log('Sitemap file:', url);
+        console.log("==================================================");
+    }
+
     printConsoleCopyright(){
         console.log();
         console.log("****************************************");
@@ -104,7 +118,6 @@ export class TaskHelper {
         console.log("Meta Tag Analyzer (c) 2019 Clyde D'Souza");
         console.log("****************************************");
         console.log("****************************************");
-        console.log();
     }
 
     _isURLValid(userURL: string): boolean {

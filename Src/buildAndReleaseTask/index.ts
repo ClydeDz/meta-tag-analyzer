@@ -17,12 +17,9 @@ async function run() {
         if (!taskHelper.isSitemapURLValid(sitemapURL)) {
             tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
             return;
-        }
-
-        console.log("");
-        console.log("==================================================");
-        console.log('Sitemap file:', sitemapURL);
-        console.log("==================================================");
+        } 
+ 
+        taskHelper.printSitemapFileURL(sitemapURL);
 
         // Makes a request to the sitemap file and creates a virtual document
         var sitemapXHRResult = await WebRequest.get(sitemapURL);  
@@ -35,27 +32,26 @@ async function run() {
         var worksheet = wb.addWorksheet('Meta Data Analysis');
         worksheet = taskHelper.addExcelHeader(worksheet, metaElements);
         
+        // Row 1 is the header of the table, that's why we're starting from 2
         var pageCounter = 2;
 
         // Loop thru all pages found in the sitemap file
         for (var i = 0; i < allPagesInSitemap.length; i++) {
+            var currentURL = allPagesInSitemap[i].innerHTML; 
+
             // Check if we need to exclude URLs. Example: .pdf
-            if (!taskHelper.isPageURLValid(allPagesInSitemap[i].innerHTML)) {
+            if (!taskHelper.isPageURLValid(currentURL)) {
                 continue;
             }
-            
-            var currentURL = allPagesInSitemap[i].innerHTML;
-            console.log("");
-            console.log("----------------------------------");
-            console.log("URL:", currentURL);
-            console.log("----------------------------------");
+             
+            taskHelper.printPageURL(currentURL); 
             worksheet.getRow(pageCounter).getCell(1).value = currentURL;
 
             // Makes a request to the sitemap file and creates a virtual document
             var currentURLXHRResult = await WebRequest.get(currentURL);  
             var virtualDocument = domino.createWindow(currentURLXHRResult.content).document;
 
-            // Title 
+            // Title tag
             var titleTag = virtualDocument.querySelector('title');
             if(titleTag!=null){
                 console.log("   ", "→", "Title", "=", titleTag.innerHTML);
