@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://profilesticker.net/</loc>
+        <lastmod>2018-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url> 
+    <url>
+        <loc>https://recipybot.azurewebsites.net/About</loc>
+        <lastmod>2018-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url> 
+    <url>
+        <loc>https://clydedz.github.io/sass-snippet-pack/</loc>
+        <lastmod>2018-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url> 
+    <url> 
+        <loc>https://clydedz.github.io/fancy-comments/</loc>
+        <lastmod>2018-04-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.8</priority>
+    </url> 
+     <url>
+        <loc>https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf</loc>
+        <lastmod>2018-04-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url> 
+</urlset> 
