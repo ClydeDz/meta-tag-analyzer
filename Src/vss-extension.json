@@ -1,0 +1,76 @@
+{
+    "manifestVersion": 1,
+    "id": "meta-tag-analyzer",
+    "name": "Meta Tag Analyzer",
+    "version": "0.1.0",
+    "publisher": "Clyde D'Souza",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "description": "Placeholder description",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "seo",
+        "meta tags",
+        "meta tag analyzer",
+        "reports",
+        "open graph"
+    ],
+    "content": {
+        "details": {
+            "path": "Overview.md"
+        },
+        "license": {
+            "path": "LICENSE.md"
+        }
+    },
+    "icons": {
+        "default": "images/icon.png"        
+    },
+    "files": [
+        {
+            "path": "buildAndReleaseTask"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/ClydeDz/meta-tag-analyzer"
+    },
+    "branding": {
+        "color": "rgb(76, 181, 245)",
+        "theme": "dark"
+    },
+    "links": {
+        "home": {
+            "uri": "https://www.fabrikam-fiber-inc.com"
+        },
+        "learn": {
+            "uri": "https://github.com/ClydeDz/meta-tag-analyzer/wiki"
+        },
+        "support": {
+            "uri": "https://github.com/ClydeDz/meta-tag-analyzer/wiki#support"
+        },
+        "repository": {
+            "uri": "https://github.com/ClydeDz/meta-tag-analyzer"
+        },
+        "issues": {
+            "uri": "https://github.com/ClydeDz/meta-tag-analyzer/issues"
+        }
+    },
+    "contributions": [
+        {
+            "id": "clydedsouza.meta-tag-analyzer.custom-build-release-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "buildAndReleaseTask"
+            }
+        }
+    ]
+}
