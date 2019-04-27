@@ -39,16 +39,16 @@ function run() {
                 reportFilename = "meta-tag-analyzer-report";
             }
             taskHelper.printSitemapFileURL(sitemapURL);
-            // Makes a request to the sitemap file and creates a virtual document 
             var virtualDocument = yield taskHelper.fetchURLAndLoadVirtualDocument(sitemapURL);
-            var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
             const metaElements = taskHelper.loadMetadataTagsIncluded();
             // Create EXCEL file and add first static row
             var wb = new exceljs_1.Workbook();
             var worksheet = wb.addWorksheet('Meta Data Analysis');
             worksheet = taskHelper.addExcelHeader(worksheet, metaElements);
             // Row 1 is the header of the table, that's why we're starting from 2
-            var pageCounter = 2;
+            var rowCounter = 2;
+            // A valid sitemap file needs to have the <loc> tag
+            var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
             // Loop thru all pages found in the sitemap file
             for (var i = 0; i < allPagesInSitemap.length; i++) {
                 var currentURL = allPagesInSitemap[i].innerHTML;
@@ -57,14 +57,13 @@ function run() {
                     continue;
                 }
                 taskHelper.printPageURL(currentURL);
-                worksheet.getRow(pageCounter).getCell(1).value = currentURL;
+                worksheet.getRow(rowCounter).getCell(1).value = currentURL;
                 // Makes a request to the sitemap file and creates a virtual document
                 var virtualDocument = yield taskHelper.fetchURLAndLoadVirtualDocument(currentURL);
                 // Title tag
                 var titleTag = virtualDocument.querySelector('title');
                 if (titleTag != null) {
-                    console.log("   ", "→", "Title", "=", titleTag.innerHTML);
-                    worksheet = taskHelper.addExcelCellContent(worksheet, pageCounter, taskHelper.getMetadataTagPosition('title-tag', metaElements), titleTag.innerHTML);
+                    worksheet = taskHelper.processTitleTag(titleTag.innerHTML, metaElements, worksheet, rowCounter);
                 }
                 // Loop thru all meta tags
                 var metaTags = virtualDocument.querySelectorAll('meta');
@@ -78,37 +77,28 @@ function run() {
                         if (nameAttribute == null) {
                             continue;
                         }
-                        if (taskHelper.isKeyUnderNameAttrCategory(nameAttribute, metaElements)) {
-                            var nameAttributeContent = metaTags[im].getAttribute('content');
-                            if (nameAttributeContent != null) {
-                                console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
-                                worksheet = taskHelper.addExcelCellContent(worksheet, pageCounter, taskHelper.getMetadataTagPosition(nameAttribute, metaElements), nameAttributeContent);
-                            }
-                        }
+                        // Filters only those meta tags we're interested in
+                        worksheet = taskHelper.processNameMetaTags(nameAttribute, metaElements, metaTags[im], worksheet, rowCounter);
                     }
                     // Example: <meta property="og:type" content="website">
                     if (isPropertyMetatag) {
                         if (propertyAttribute == null) {
                             continue;
                         }
-                        if (taskHelper.isKeyUnderPropertyAttrCategory(propertyAttribute, metaElements)) {
-                            var propertyAttributeContent = metaTags[im].getAttribute('content');
-                            if (propertyAttributeContent != null) {
-                                console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
-                                worksheet = taskHelper.addExcelCellContent(worksheet, pageCounter, taskHelper.getMetadataTagPosition(propertyAttribute, metaElements), propertyAttributeContent);
-                            }
-                        }
+                        // Filters only those meta tags we're interested in
+                        worksheet = taskHelper.processPropertyMetaTags(propertyAttribute, metaElements, metaTags[im], worksheet, rowCounter);
                     }
                 }
-                pageCounter++;
+                rowCounter++;
             }
-            worksheet = taskHelper.addExcelFooter(worksheet, ++pageCounter);
+            worksheet = taskHelper.addExcelFooter(worksheet, ++rowCounter);
             wb.creator = "Clyde D'Souza";
             wb.lastModifiedBy = "Clyde D'Souza";
             wb.created = new Date();
             wb.xlsx.writeFile('./' + reportFilename + '.xlsx');
         }
         catch (err) {
+            console.log();
             tl.setResult(tl.TaskResult.Failed, err.message);
         }
         finally {

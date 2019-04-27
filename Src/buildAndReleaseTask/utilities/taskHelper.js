@@ -106,6 +106,10 @@ class TaskHelper {
         console.log("URL:", url);
         console.log("----------------------------------");
     }
+    /**
+     * Makes a request to the supplied URL and creates a virtual document
+     * @param url URL whose contents you want to fetch
+     */
     fetchURLAndLoadVirtualDocument(url) {
         return __awaiter(this, void 0, void 0, function* () {
             var currentURLXHRResult = yield WebRequest.get(url);
@@ -130,6 +134,37 @@ class TaskHelper {
         if (filename == null || filename == "")
             return false;
         return !(filename.indexOf('.') >= 0);
+    }
+    processNameMetaTags(nameAttribute, metaElements, metaTag, worksheet, rowCounter) {
+        if (!this.isKeyUnderNameAttrCategory(nameAttribute, metaElements)) {
+            return worksheet;
+        }
+        var nameAttributeContent = metaTag.getAttribute('content');
+        if (nameAttributeContent == null) {
+            return worksheet;
+        }
+        console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
+        var position = this.getMetadataTagPosition(nameAttribute, metaElements);
+        worksheet = this.addExcelCellContent(worksheet, rowCounter, position, nameAttributeContent);
+        return worksheet;
+    }
+    processPropertyMetaTags(propertyAttribute, metaElements, metaTag, worksheet, rowCounter) {
+        if (!this.isKeyUnderPropertyAttrCategory(propertyAttribute, metaElements)) {
+            return worksheet;
+        }
+        var propertyAttributeContent = metaTag.getAttribute('content');
+        if (propertyAttributeContent == null) {
+            return worksheet;
+        }
+        console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
+        var position = this.getMetadataTagPosition(propertyAttribute, metaElements);
+        worksheet = this.addExcelCellContent(worksheet, rowCounter, position, propertyAttributeContent);
+        return worksheet;
+    }
+    processTitleTag(titleTagContent, metaElements, worksheet, rowCounter) {
+        console.log("   ", "→", "Title", "=", titleTagContent); //titleTag.innerHTML
+        worksheet = this.addExcelCellContent(worksheet, rowCounter, this.getMetadataTagPosition('title-tag', metaElements), titleTagContent);
+        return worksheet;
     }
     _isURLValid(userURL) {
         return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(userURL);

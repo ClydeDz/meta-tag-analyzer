@@ -61,15 +61,8 @@ async function run() {
             // Title tag
             var titleTag = virtualDocument.querySelector('title');
             if (titleTag != null) {
-                console.log("   ", "→", "Title", "=", titleTag.innerHTML);
-                worksheet = taskHelper.addExcelCellContent(
-                    worksheet,
-                    rowCounter,
-                    taskHelper.getMetadataTagPosition('title-tag', metaElements),
-                    titleTag.innerHTML
-                );
-            }
-            
+                worksheet= taskHelper.processTitleTag(titleTag.innerHTML, metaElements, worksheet, rowCounter);               
+            }            
             
             // Loop thru all meta tags
             var metaTags = virtualDocument.querySelectorAll('meta'); 
@@ -86,20 +79,7 @@ async function run() {
                     }
 
                     // Filters only those meta tags we're interested in
-                    if(taskHelper.isKeyUnderNameAttrCategory(nameAttribute, metaElements)){
-                        var nameAttributeContent = metaTags[im].getAttribute('content');
-
-                        if (nameAttributeContent != null) {
-                            console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
-                            worksheet = taskHelper.addExcelCellContent(
-                                worksheet,
-                                rowCounter,
-                                taskHelper.getMetadataTagPosition(nameAttribute, metaElements),
-                                nameAttributeContent
-                            );
-                        }
-                       
-                    } 
+                    worksheet = taskHelper.processNameMetaTags(nameAttribute, metaElements, metaTags[im], worksheet, rowCounter); 
                 }
 
                 // Example: <meta property="og:type" content="website">
@@ -109,20 +89,7 @@ async function run() {
                     }
 
                     // Filters only those meta tags we're interested in
-                    if (taskHelper.isKeyUnderPropertyAttrCategory(propertyAttribute, metaElements)) {
-                        var propertyAttributeContent = metaTags[im].getAttribute('content');
-
-                        if (propertyAttributeContent != null) {
-                            console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
-                            worksheet = taskHelper.addExcelCellContent(
-                                worksheet,
-                                rowCounter,
-                                taskHelper.getMetadataTagPosition(propertyAttribute, metaElements),
-                                propertyAttributeContent
-                            );
-                        }
-
-                    } 
+                    worksheet = taskHelper.processPropertyMetaTags(propertyAttribute, metaElements, metaTags[im], worksheet, rowCounter); 
                 }
             } 
 
@@ -133,8 +100,7 @@ async function run() {
         wb.creator = "Clyde D'Souza";
         wb.lastModifiedBy  = "Clyde D'Souza";
         wb.created = new Date();
-        wb.xlsx.writeFile('./'+reportFilename+'.xlsx');
-
+        wb.xlsx.writeFile('./'+reportFilename+'.xlsx'); 
     }
     catch (err) {
         console.log();
@@ -147,3 +113,5 @@ async function run() {
 }
 
 run();
+
+

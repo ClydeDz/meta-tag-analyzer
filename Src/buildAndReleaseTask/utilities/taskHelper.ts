@@ -1,4 +1,4 @@
-import { Worksheet } from "exceljs";
+import {Workbook, Row, Cell, Worksheet} from 'exceljs';
 import * as WebRequest from 'web-request'; 
 import * as domino from 'domino'; 
 
@@ -136,6 +136,60 @@ export class TaskHelper {
 
         return !(filename.indexOf('.') >= 0);
     }
+
+    processNameMetaTags(nameAttribute: string, metaElements: MetadataTagsIncluded[], metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {
+        if (!this.isKeyUnderNameAttrCategory(nameAttribute, metaElements)) {
+            return worksheet;
+        }
+        
+        var nameAttributeContent = metaTag.getAttribute('content');
+        if (nameAttributeContent == null) {
+            return worksheet;            
+        }
+
+        console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
+        var position = this.getMetadataTagPosition(nameAttribute, metaElements);
+        worksheet = this.addExcelCellContent(
+            worksheet, 
+            rowCounter, 
+            position, 
+            nameAttributeContent);
+        return worksheet;
+    }
+
+    processPropertyMetaTags(propertyAttribute: string, metaElements: MetadataTagsIncluded[], metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {
+        if (!this.isKeyUnderPropertyAttrCategory(propertyAttribute, metaElements)) {
+            return worksheet;
+        }
+
+        var propertyAttributeContent = metaTag.getAttribute('content');
+        if (propertyAttributeContent == null) {
+            return worksheet;
+        }
+
+        console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
+        var position = this.getMetadataTagPosition(propertyAttribute, metaElements);
+        worksheet = this.addExcelCellContent(
+            worksheet,
+            rowCounter,
+            position,
+            propertyAttributeContent
+        ); 
+        return worksheet;
+    }
+
+    processTitleTag(titleTagContent: string, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {
+        console.log("   ", "→", "Title", "=", titleTagContent); //titleTag.innerHTML
+        worksheet = this.addExcelCellContent(
+            worksheet,
+            rowCounter,
+            this.getMetadataTagPosition('title-tag', metaElements),
+            titleTagContent
+        );        
+        return worksheet;
+    }
+
+
 
     _isURLValid(userURL: string): boolean {
         return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(userURL);
