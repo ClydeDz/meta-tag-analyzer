@@ -25,6 +25,7 @@ async function run() {
         var sitemapXHRResult = await WebRequest.get(sitemapURL);  
         var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
         var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
+        const metaElements = taskHelper.loadMetadataTagsIncluded();
 
         // Loop thru all pages found in the sitemap file
         for (var i = 0; i < allPagesInSitemap.length; i++) {
@@ -42,7 +43,11 @@ async function run() {
             var virtualDocument = domino.createWindow(currentURLXHRResult.content).document;
 
             // Title 
-            var titleTag = virtualDocument.querySelectorAll('title');
+            var titleTag = virtualDocument.querySelector('title');
+            if(titleTag!=null){
+                console.log("   ", "Title", "=", titleTag.innerHTML);
+            }
+            
             
             // Loop thru all meta tags
             var metaTags = virtualDocument.querySelectorAll('meta'); 
@@ -60,7 +65,7 @@ async function run() {
                     } 
                 }
 
-                //Example: <meta property="og:type" content="website">
+                // Example: <meta property="og:type" content="website">
                 if(isPropertyMetatag){
                     if(propertyAttribute == "og:type" || propertyAttribute == "og:url"){
                         var propertyAttributeContent = metaTags[im].getAttribute('content');

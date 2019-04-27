@@ -1,5 +1,50 @@
+export class MetadataTagsIncluded {
+    key:           string;
+    displayText:    string;
+    columnPosition: number;
 
-export class TaskHelper { 
+    constructor(name: string, displayText: string, columnPosition:number) {
+        this.key = name;
+        this.columnPosition = columnPosition;
+        this.displayText = displayText;
+    } 
+}
+
+export class TaskHelper {  
+    
+    loadMetadataTagsIncluded() : Array<MetadataTagsIncluded> {
+        var metadataElements = new Array<MetadataTagsIncluded>(); 
+        // Essentials
+        metadataElements.push(new MetadataTagsIncluded("title-tag", "Page title", 2));
+        metadataElements.push(new MetadataTagsIncluded("description", "Page description", 3));
+        metadataElements.push(new MetadataTagsIncluded("title", "Meta title", 4));
+
+        // Open graph
+        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", 5));        
+        metadataElements.push(new MetadataTagsIncluded("og:url", "Open-graph URL", 6));
+        metadataElements.push(new MetadataTagsIncluded("og:title", "Open-graph title", 7));
+        metadataElements.push(new MetadataTagsIncluded("og:description", "Open-graph description", 8));
+        metadataElements.push(new MetadataTagsIncluded("og:site_name", "Site name", 9));
+
+        // Twitter specific
+        metadataElements.push(new MetadataTagsIncluded("twitter:card", "Twitter card type", 10));
+        metadataElements.push(new MetadataTagsIncluded("twitter:site", "@username of website", 11));
+        metadataElements.push(new MetadataTagsIncluded("twitter:image:alt", "Alternate Twitter image", 12));
+        metadataElements.push(new MetadataTagsIncluded("twitter:creator", "@username of content creator", 13));
+
+        // Others
+        metadataElements.push(new MetadataTagsIncluded("fb:app_id", "Facebook app ID", 14));
+        return metadataElements;
+    }    
+
+    getMetadataTagPosition(search: string, allMetaTags: MetadataTagsIncluded[]): number {
+        for (var si = 0; si < allMetaTags.length; si++){
+            if(search == allMetaTags[si].key){
+                return allMetaTags[si].columnPosition;
+            }
+        }
+        return 0;
+    }
 
     isSitemapURLValid(sitemapURL: string): boolean {
          var isValidURL = this._isURLValid(sitemapURL);
