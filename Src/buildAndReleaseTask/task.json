@@ -20,6 +20,14 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Full URL of the sitemap file. Sitemap file must be of `.xml` file extension."
+        },
+        {
+            "name": "outputFilename",
+            "type": "string",
+            "label": "Output filename",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Custom filename for the Meta Tag Analyzer report. Only type in the file name and not the file extension."
         }
     ],
     "execution": {

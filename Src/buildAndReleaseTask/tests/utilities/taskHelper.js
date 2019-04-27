@@ -51,3 +51,24 @@ describe('utilities / taskHelper / isPageURLValid', function () {
         done();
     });
 });
+//_________________________________________________________________________________
+describe('utilities / taskHelper / isOutputFilenameValid', function () {
+    it('should succeed with valid filename', function (done) {
+        this.timeout(1000);
+        const taskHelper = new taskHelper_1.TaskHelper();
+        var isValidFilename = taskHelper.isOutputFilenameValid("meta-report");
+        assert.equal(isValidFilename, true, 'should have succeeded');
+        isValidFilename = taskHelper.isOutputFilenameValid("meta report post release pipeline");
+        assert.equal(isValidFilename, true, 'should have succeeded');
+        done();
+    });
+    it('should fail with invalid filename', function (done) {
+        this.timeout(1000);
+        const taskHelper = new taskHelper_1.TaskHelper();
+        var isValidFilename = taskHelper.isOutputFilenameValid("");
+        assert.equal(isValidFilename, false, 'should have succeeded');
+        isValidFilename = taskHelper.isOutputFilenameValid("report.xlsx");
+        assert.equal(isValidFilename, false, 'should have succeeded');
+        done();
+    });
+});
