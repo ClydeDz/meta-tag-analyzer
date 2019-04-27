@@ -329,5 +329,8 @@ ASALocalRun/
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
 
-# Azure DevOps custom task
+# Exclude Azure DevOps custom task key file generated when dev task is executed
 .taskkey
+
+# Exclude EXCEL files generated during development
+*.xlsx
