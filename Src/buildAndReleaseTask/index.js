@@ -17,8 +17,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const tl = __importStar(require("azure-pipelines-task-lib/task"));
 const exceljs_1 = require("exceljs");
-const WebRequest = __importStar(require("web-request"));
-const domino = __importStar(require("domino"));
 const taskHelper_1 = require("./utilities/taskHelper");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -41,9 +39,8 @@ function run() {
                 reportFilename = "meta-tag-analyzer-report";
             }
             taskHelper.printSitemapFileURL(sitemapURL);
-            // Makes a request to the sitemap file and creates a virtual document
-            var sitemapXHRResult = yield WebRequest.get(sitemapURL);
-            var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
+            // Makes a request to the sitemap file and creates a virtual document 
+            var virtualDocument = yield taskHelper.fetchURLAndLoadVirtualDocument(sitemapURL);
             var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
             const metaElements = taskHelper.loadMetadataTagsIncluded();
             // Create EXCEL file and add first static row
@@ -62,8 +59,7 @@ function run() {
                 taskHelper.printPageURL(currentURL);
                 worksheet.getRow(pageCounter).getCell(1).value = currentURL;
                 // Makes a request to the sitemap file and creates a virtual document
-                var currentURLXHRResult = yield WebRequest.get(currentURL);
-                var virtualDocument = domino.createWindow(currentURLXHRResult.content).document;
+                var virtualDocument = yield taskHelper.fetchURLAndLoadVirtualDocument(currentURL);
                 // Title tag
                 var titleTag = virtualDocument.querySelector('title');
                 if (titleTag != null) {

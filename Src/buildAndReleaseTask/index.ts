@@ -1,7 +1,5 @@
 import * as tl from 'azure-pipelines-task-lib/task';
 import {Workbook, Row, Cell, Worksheet} from 'exceljs';
-import * as WebRequest from 'web-request'; 
-import * as domino from 'domino'; 
 
 import { TaskHelper } from "./utilities/taskHelper";
 
@@ -31,9 +29,8 @@ async function run() {
  
         taskHelper.printSitemapFileURL(sitemapURL);
 
-        // Makes a request to the sitemap file and creates a virtual document
-        var sitemapXHRResult = await WebRequest.get(sitemapURL);  
-        var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
+        // Makes a request to the sitemap file and creates a virtual document 
+        var virtualDocument = await taskHelper.fetchURLAndLoadVirtualDocument(sitemapURL);
         var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
         const metaElements = taskHelper.loadMetadataTagsIncluded();
 
@@ -58,8 +55,7 @@ async function run() {
             worksheet.getRow(pageCounter).getCell(1).value = currentURL;
 
             // Makes a request to the sitemap file and creates a virtual document
-            var currentURLXHRResult = await WebRequest.get(currentURL);  
-            var virtualDocument = domino.createWindow(currentURLXHRResult.content).document;
+            var virtualDocument = await taskHelper.fetchURLAndLoadVirtualDocument(currentURL);
 
             // Title tag
             var titleTag = virtualDocument.querySelector('title');

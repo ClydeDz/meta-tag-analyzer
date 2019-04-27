@@ -1,4 +1,6 @@
 import { Worksheet } from "exceljs";
+import * as WebRequest from 'web-request'; 
+import * as domino from 'domino'; 
 
 export class MetadataTagsIncluded {
     key:            string;
@@ -102,6 +104,11 @@ export class TaskHelper {
         console.log("----------------------------------");
         console.log("URL:", url);
         console.log("----------------------------------");
+    }
+
+    async fetchURLAndLoadVirtualDocument(url: string): Promise<Document>{
+        var currentURLXHRResult = await WebRequest.get(url);  
+        return domino.createWindow(currentURLXHRResult.content).document;
     }
 
     printSitemapFileURL(url: string){
