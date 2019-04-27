@@ -18,22 +18,23 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tl = __importStar(require("azure-pipelines-task-lib/task"));
 const WebRequest = __importStar(require("web-request"));
 const domino = __importStar(require("domino"));
+const taskHelper_1 = require("./utilities/taskHelper");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         console.time("Execution time");
+        const taskHelper = new taskHelper_1.TaskHelper();
         try {
             const sitemapURL = tl.getInput('sitemapURL', true);
-            // TODO: Validate the URL using a helper method and use the below logic to throw an error
-            // if (inputString == 'bad') {
-            //     tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
-            //     return;
-            // }
+            // Validate the URL
+            if (!taskHelper.isURLValid(sitemapURL)) {
+                tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
+                return;
+            }
             console.log('Sitemap file:', sitemapURL);
             // Makes a request to the sitemap file and creates a virtual document
             var sitemapXHRResult = yield WebRequest.get(sitemapURL);
             var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
             var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
-            console.log('Sitemap file LENGTH:', allPagesInSitemap.length);
             // Loop thru all pages found in the sitemap file
             for (var i = 0; i < allPagesInSitemap.length; i++) {
                 // TODO: Check if we need to exclude the URL. Example: .pdf URL
@@ -42,6 +43,7 @@ function run() {
                 // }
                 var currentURL = allPagesInSitemap[i].innerHTML;
                 console.log("URL:", currentURL);
+                console.log("-----------------");
                 // Makes a request to the sitemap file and creates a virtual document
                 var currentURLXHRResult = yield WebRequest.get(currentURL);
                 var virtualDocument = domino.createWindow(currentURLXHRResult.content).document;

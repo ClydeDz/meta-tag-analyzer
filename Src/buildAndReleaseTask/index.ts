@@ -3,25 +3,29 @@ import {Workbook, Row, Cell, Worksheet} from 'exceljs';
 import * as WebRequest from 'web-request'; 
 import * as domino from 'domino'; 
 
+import { TaskHelper } from "./utilities/taskHelper";
+
 async function run() {
     console.time("Execution time");
+    const taskHelper = new TaskHelper();
 
     try {
         const sitemapURL: string = tl.getInput('sitemapURL', true);
         
-        // TODO: Validate the URL using a helper method and use the below logic to throw an error
-        // if (inputString == 'bad') {
-        //     tl.setResult(tl.TaskResult.Failed, 'Bad input was given');
-        //     return;
-        // }
+        // Validate the URL
+        if (!taskHelper.isURLValid(sitemapURL)) {
+            tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
+            return;
+        }
 
         console.log('Sitemap file:', sitemapURL);
+        console.log("=========================");
 
         // Makes a request to the sitemap file and creates a virtual document
         var sitemapXHRResult = await WebRequest.get(sitemapURL);  
         var virtualDocument = domino.createWindow(sitemapXHRResult.content).document;
         var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
-        console.log('Sitemap file LENGTH:', allPagesInSitemap.length);
+
         // Loop thru all pages found in the sitemap file
         for (var i = 0; i < allPagesInSitemap.length; i++) {
             // TODO: Check if we need to exclude the URL. Example: .pdf URL
