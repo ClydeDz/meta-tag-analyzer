@@ -1,0 +1,15 @@
+{
+  "name": "meta-tag-analyzer",
+  "version": "0.1.0",
+  "description": "Placeholder description",
+  "main": "index.js",
+  "author": "Clyde D'Souza",
+  "license": "MIT",
+  "dependencies": {
+    "azure-pipelines-task-lib": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^11.13.8",
+    "@types/q": "^1.5.2"
+  }
+}
