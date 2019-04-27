@@ -9,6 +9,7 @@
     "azure-pipelines-task-lib": "^2.8.0"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.6",
     "@types/node": "^11.13.8",
     "@types/q": "^1.5.2"
   }
