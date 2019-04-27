@@ -24,6 +24,7 @@ function run() {
     return __awaiter(this, void 0, void 0, function* () {
         console.time("Execution time");
         const taskHelper = new taskHelper_1.TaskHelper();
+        taskHelper.printConsoleCopyright();
         try {
             const sitemapURL = tl.getInput('sitemapURL', true);
             // Validate the URL
@@ -109,6 +110,7 @@ function run() {
             tl.setResult(tl.TaskResult.Failed, err.message);
         }
         finally {
+            console.log();
             console.timeEnd("Execution time");
         }
     });

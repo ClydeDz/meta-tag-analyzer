@@ -8,6 +8,7 @@ import { TaskHelper } from "./utilities/taskHelper";
 async function run() {
     console.time("Execution time");
     const taskHelper = new TaskHelper();
+    taskHelper.printConsoleCopyright();
 
     try {
         const sitemapURL: string = tl.getInput('sitemapURL', true);
@@ -131,6 +132,7 @@ async function run() {
         tl.setResult(tl.TaskResult.Failed, err.message);
     }
     finally{
+        console.log();
         console.timeEnd("Execution time");
     }
 }
