@@ -11,6 +11,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tl = require("azure-pipelines-task-lib/task");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
+        // Start timing now
+        console.time("Execution time");
         try {
             const inputString = tl.getInput('samplestring', true);
             if (inputString == 'bad') {
@@ -21,6 +23,9 @@ function run() {
         }
         catch (err) {
             tl.setResult(tl.TaskResult.Failed, err.message);
+        }
+        finally {
+            console.timeEnd("Execution time");
         }
     });
 }

@@ -1,6 +1,8 @@
 import tl = require('azure-pipelines-task-lib/task');
 
 async function run() {
+    console.time("Execution time");
+
     try {
         const inputString: string = tl.getInput('samplestring', true);
         if (inputString == 'bad') {
@@ -11,6 +13,9 @@ async function run() {
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err.message);
+    }
+    finally{
+        console.timeEnd("Execution time");
     }
 }
 
