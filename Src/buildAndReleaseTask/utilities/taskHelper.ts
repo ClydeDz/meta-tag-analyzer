@@ -106,6 +106,10 @@ export class TaskHelper {
         console.log("----------------------------------");
     }
 
+    /**
+     * Makes a request to the supplied URL and creates a virtual document 
+     * @param url URL whose contents you want to fetch
+     */
     async fetchURLAndLoadVirtualDocument(url: string): Promise<Document>{
         var currentURLXHRResult = await WebRequest.get(url);  
         return domino.createWindow(currentURLXHRResult.content).document;
