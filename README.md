@@ -1,7 +1,8 @@
 # Meta Tag Analyzer
-An Azure DevOps task that generates a report after analysing the meta tags of each page on your website.  
-   
-Install this extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer) 
+An Azure DevOps task that generates a report after analysing the meta tags of each page on your website. Install this extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer).   
+
+[![Build status](https://clydedsouza.visualstudio.com/Meta%20Tag%20Analyzer/_apis/build/status/Master%20build)](https://clydedsouza.visualstudio.com/Meta%20Tag%20Analyzer/_build/latest?definitionId=21)
+[![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/clydedsouza.meta-tag-analyzer.svg?color=brightgreen)](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer)   
 
 ## What is Meta Tag Analyzer?
 **Preface:** We all agree how important meta tags are to our website. It helps describe the contents of a page and thereby providing more useful information for search engines to display. You can also dictate what information is shown when you share a page from your website on social media.   
