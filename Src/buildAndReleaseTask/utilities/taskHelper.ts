@@ -28,6 +28,7 @@ export class TaskHelper {
         metadataElements.push(new MetadataTagsIncluded("description", "Page description", ++columnPosition, 'nameAttr'));
         metadataElements.push(new MetadataTagsIncluded("description-length", "Page description length", ++columnPosition, 'nameAttr'));
         metadataElements.push(new MetadataTagsIncluded("title", "Meta title", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("Keywords", "Keywords", ++columnPosition, 'nameAttr'));
 
         // Open graph
         metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", ++columnPosition, 'propertyAttr'));        
