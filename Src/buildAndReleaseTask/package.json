@@ -9,10 +9,11 @@
     "azure-pipelines-task-lib": "^2.8.0",
     "domino": "^2.1.3",
     "exceljs": "^1.8.0",
+    "mocha": "^6.1.4",
     "web-request": "^1.0.7"
   },
   "scripts": {
-    "test": "mocha tests/**/*.test.js --timeout 100000 --exit"
+    "test": "mocha tests/**/*.test.js --reporter mocha-junit-reporter --timeout 150000 --exit"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.6",

@@ -334,3 +334,4 @@ ASALocalRun/
 
 # Exclude EXCEL files generated during development
 *.xlsx
+Src/buildAndReleaseTask/test-results.xml
