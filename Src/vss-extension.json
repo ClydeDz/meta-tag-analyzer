@@ -2,14 +2,14 @@
     "manifestVersion": 1,
     "id": "meta-tag-analyzer",
     "name": "Meta Tag Analyzer",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "publisher": "clydedsouza",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Placeholder description",
+    "description": "Generates a report after analysing the meta tags of each page on your website.",
     "categories": [
         "Azure Pipelines"
     ],
@@ -18,6 +18,12 @@
         "meta tags",
         "meta tag analyzer",
         "reports",
+        "excel",
+        "office",
+        "reporting",
+        "post build",
+        "post release",
+        "automate",
         "open graph"
     ],
     "content": {
@@ -46,7 +52,7 @@
     },
     "links": {
         "home": {
-            "uri": "https://www.fabrikam-fiber-inc.com"
+            "uri": "https://github.com/ClydeDz/meta-tag-analyzer/"
         },
         "learn": {
             "uri": "https://github.com/ClydeDz/meta-tag-analyzer/wiki"
