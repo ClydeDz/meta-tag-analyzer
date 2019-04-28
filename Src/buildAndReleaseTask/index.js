@@ -58,6 +58,11 @@ function run() {
                 }
                 taskHelper.printPageURL(currentURL);
                 worksheet.getRow(rowCounter).getCell(1).value = currentURL;
+                worksheet.getRow(rowCounter).getCell(1).fill = {
+                    type: 'pattern',
+                    pattern: 'solid',
+                    fgColor: { argb: 'FFF0E68C' }
+                };
                 // Makes a request to the sitemap file and creates a virtual document
                 var virtualDocument = yield taskHelper.fetchURLAndLoadVirtualDocument(currentURL);
                 // Title tag

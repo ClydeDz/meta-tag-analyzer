@@ -29,23 +29,28 @@ exports.MetadataTagsIncluded = MetadataTagsIncluded;
 class TaskHelper {
     loadMetadataTagsIncluded() {
         var metadataElements = new Array();
+        var columnPosition = 1;
         // Essentials
-        metadataElements.push(new MetadataTagsIncluded("title-tag", "Page title", 2, 'tagElement'));
-        metadataElements.push(new MetadataTagsIncluded("description", "Page description", 3, 'nameAttr'));
-        metadataElements.push(new MetadataTagsIncluded("title", "Meta title", 4, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("title-tag", "Page title", ++columnPosition, 'tagElement'));
+        metadataElements.push(new MetadataTagsIncluded("title-tag-length", "Page title length", ++columnPosition, 'tagElement'));
+        metadataElements.push(new MetadataTagsIncluded("description", "Page description", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("description-length", "Page description length", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("title", "Meta title", ++columnPosition, 'nameAttr'));
         // Open graph
-        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", 5, 'propertyAttr'));
-        metadataElements.push(new MetadataTagsIncluded("og:url", "Open-graph URL", 6, 'propertyAttr'));
-        metadataElements.push(new MetadataTagsIncluded("og:title", "Open-graph title", 7, 'propertyAttr'));
-        metadataElements.push(new MetadataTagsIncluded("og:description", "Open-graph description", 8, 'propertyAttr'));
-        metadataElements.push(new MetadataTagsIncluded("og:site_name", "Site name", 9, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:url", "Open-graph URL", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:title", "Open-graph title", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:title-length", "Open-graph title length", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:description", "Open-graph description", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:description-length", "Open-graph description length", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:site_name", "Site name", ++columnPosition, 'propertyAttr'));
         // Twitter specific
-        metadataElements.push(new MetadataTagsIncluded("twitter:card", "Twitter card type", 10, 'nameAttr'));
-        metadataElements.push(new MetadataTagsIncluded("twitter:site", "@username of website", 11, 'nameAttr'));
-        metadataElements.push(new MetadataTagsIncluded("twitter:image:alt", "Alternate Twitter image", 12, 'nameAttr'));
-        metadataElements.push(new MetadataTagsIncluded("twitter:creator", "@username of content creator", 13, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("twitter:card", "Twitter card type", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("twitter:site", "@username of website", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("twitter:image:alt", "Alternate Twitter image", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("twitter:creator", "@username of content creator", ++columnPosition, 'nameAttr'));
         // Others
-        metadataElements.push(new MetadataTagsIncluded("fb:app_id", "Facebook app ID", 14, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("fb:app_id", "Facebook app ID", ++columnPosition, 'propertyAttr'));
         return metadataElements;
     }
     getMetadataTagPosition(search, allMetaTags) {
@@ -57,14 +62,52 @@ class TaskHelper {
         return 0;
     }
     addExcelHeader(workingSheet, allMetaTags) {
-        workingSheet.getRow(1).getCell(1).value = "URL";
+        let cellA1 = workingSheet.getRow(1).getCell(1);
+        cellA1.value = "URL";
+        cellA1.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFFFF00' }
+        };
+        cellA1.font = {
+            bold: true
+        };
         for (var si = 0; si < allMetaTags.length; si++) {
-            workingSheet.getRow(1).getCell(allMetaTags[si].columnPosition).value = allMetaTags[si].displayText;
+            let cell = workingSheet.getRow(1).getCell(allMetaTags[si].columnPosition);
+            cell.value = allMetaTags[si].displayText;
+            cell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFFFF00' }
+            };
+            cell.font = {
+                bold: true
+            };
         }
         return workingSheet;
     }
     addExcelFooter(workingSheet, row) {
-        workingSheet.getRow(row).getCell(1).value = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
+        // Legend
+        workingSheet.getRow(++row).getCell(1).value = "Legend:";
+        let legendCell1 = workingSheet.getRow(++row).getCell(1);
+        legendCell1.value = "Over ideal limit";
+        legendCell1.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFF8C00' }
+        };
+        let legendCell2 = workingSheet.getRow(row).getCell(2);
+        legendCell2.value = "No data when required";
+        legendCell2.fill = {
+            type: 'pattern',
+            pattern: 'solid',
+            fgColor: { argb: 'FFFF6347' }
+        };
+        ++row;
+        // Meta
+        workingSheet.getRow(++row).getCell(1).value = "Report geneted on:";
+        workingSheet.getRow(row).getCell(2).value = new Date();
+        workingSheet.getRow(++row).getCell(1).value = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
         workingSheet.getRow(row).getCell(2).value = "www.clydedsouza.net";
         return workingSheet;
     }
@@ -146,6 +189,9 @@ class TaskHelper {
         console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
         var position = this.getMetadataTagPosition(nameAttribute, metaElements);
         worksheet = this.addExcelCellContent(worksheet, rowCounter, position, nameAttributeContent);
+        if (nameAttribute == "description") {
+            worksheet = this.processTagLength(nameAttributeContent, metaElements, worksheet, rowCounter, 'description-length', this.getMaxLengthOfMetatag(nameAttribute), "Length of description");
+        }
         return worksheet;
     }
     processPropertyMetaTags(propertyAttribute, metaElements, metaTag, worksheet, rowCounter) {
@@ -159,11 +205,46 @@ class TaskHelper {
         console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
         var position = this.getMetadataTagPosition(propertyAttribute, metaElements);
         worksheet = this.addExcelCellContent(worksheet, rowCounter, position, propertyAttributeContent);
+        if (propertyAttribute == "og:description" || propertyAttribute == "og:title") {
+            worksheet = this.processTagLength(propertyAttributeContent, metaElements, worksheet, rowCounter, propertyAttribute + '-length', this.getMaxLengthOfMetatag(propertyAttribute), "Length of " + propertyAttribute);
+        }
         return worksheet;
+    }
+    getMaxLengthOfMetatag(metatag) {
+        if (metatag == "og:title" || metatag == "title-tag") {
+            return 60;
+        }
+        if (metatag == "og:description" || metatag == "description") {
+            return 300;
+        }
+        return 0;
     }
     processTitleTag(titleTagContent, metaElements, worksheet, rowCounter) {
         console.log("   ", "→", "Title", "=", titleTagContent); //titleTag.innerHTML
         worksheet = this.addExcelCellContent(worksheet, rowCounter, this.getMetadataTagPosition('title-tag', metaElements), titleTagContent);
+        worksheet = this.processTagLength(titleTagContent, metaElements, worksheet, rowCounter, 'title-tag-length', this.getMaxLengthOfMetatag('title-tag'), "Length of title tag");
+        return worksheet;
+    }
+    processTagLength(tagContent, metaElements, worksheet, rowCounter, key, maxLengthAllowed, consoleMessageForKey) {
+        console.log("   ", "→", consoleMessageForKey, "=", tagContent.length); //titleTag.innerHTML
+        let position = this.getMetadataTagPosition(key, metaElements);
+        worksheet = this.addExcelCellContent(worksheet, rowCounter, position, tagContent.length);
+        if (tagContent.length > maxLengthAllowed) {
+            let tagLengthCell = worksheet.getRow(rowCounter).getCell(position);
+            tagLengthCell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFF8C00' }
+            };
+        }
+        if (tagContent.length == 0) {
+            let tagLengthCell = worksheet.getRow(rowCounter).getCell(position);
+            tagLengthCell.fill = {
+                type: 'pattern',
+                pattern: 'solid',
+                fgColor: { argb: 'FFFF6347' }
+            };
+        }
         return worksheet;
     }
     _isURLValid(userURL) {
