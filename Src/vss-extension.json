@@ -3,7 +3,7 @@
     "id": "meta-tag-analyzer",
     "name": "Meta Tag Analyzer",
     "version": "0.1.0",
-    "publisher": "Clyde D'Souza",
+    "publisher": "clydedsouza",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
