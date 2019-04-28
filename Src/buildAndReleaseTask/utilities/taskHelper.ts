@@ -114,8 +114,8 @@ export class TaskHelper {
         ++row;
 
         // Meta
-        workingSheet.getRow(++row).getCell(1).value = "Report geneted on: "+ new Date();
-        ++row;
+        workingSheet.getRow(++row).getCell(1).value = "Report generated on: ";
+        workingSheet.getRow(row).getCell(2).value = "" + new Date();
         workingSheet.getRow(++row).getCell(1).value = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
         workingSheet.getRow(row).getCell(2).value = "www.clydedsouza.net";
         return workingSheet;
