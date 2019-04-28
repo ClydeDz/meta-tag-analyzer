@@ -35,7 +35,7 @@
         }
     },
     "icons": {
-        "default": "images/icon.png"        
+        "default": "images/icon-dark.png"        
     },
     "files": [
         {
@@ -45,10 +45,6 @@
     "repository": {
         "type": "git",
         "uri": "https://github.com/ClydeDz/meta-tag-analyzer"
-    },
-    "branding": {
-        "color": "rgb(76, 181, 245)",
-        "theme": "dark"
     },
     "links": {
         "home": {
