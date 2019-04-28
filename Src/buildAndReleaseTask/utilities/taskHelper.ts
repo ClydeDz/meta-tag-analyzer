@@ -31,14 +31,16 @@ export class TaskHelper {
         metadataElements.push(new MetadataTagsIncluded("Keywords", "Keywords", ++columnPosition, 'nameAttr'));
 
         // Open graph
-        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", ++columnPosition, 'propertyAttr'));        
+        metadataElements.push(new MetadataTagsIncluded("og:image", "Open-graph image", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:url", "Open-graph URL", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:title", "Open-graph title", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:title-length", "Open-graph title length", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:description", "Open-graph description", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:description-length", "Open-graph description length", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", ++columnPosition, 'propertyAttr'));        
         metadataElements.push(new MetadataTagsIncluded("og:site_name", "Site name", ++columnPosition, 'propertyAttr'));
-
+        metadataElements.push(new MetadataTagsIncluded("og:locale", "Language", ++columnPosition, 'propertyAttr'));
+        
         // Twitter specific
         metadataElements.push(new MetadataTagsIncluded("twitter:card", "Twitter card type", ++columnPosition, 'nameAttr'));
         metadataElements.push(new MetadataTagsIncluded("twitter:site", "@username of website", ++columnPosition, 'nameAttr'));
@@ -47,6 +49,11 @@ export class TaskHelper {
 
         // Others
         metadataElements.push(new MetadataTagsIncluded("fb:app_id", "Facebook app ID", ++columnPosition, 'propertyAttr'));
+        metadataElements.push(new MetadataTagsIncluded("ROBOTS", "Robots meta tag", ++columnPosition, 'nameAttr'));
+        metadataElements.push(new MetadataTagsIncluded("h1", "H1 element", ++columnPosition, 'tagElement'));
+        metadataElements.push(new MetadataTagsIncluded("h1-length", "H1 length", ++columnPosition, 'tagElement'));
+        metadataElements.push(new MetadataTagsIncluded("h1-number", "Number of H1 tags found", ++columnPosition, 'tagElement'));
+        
         return metadataElements;
     }    
 
@@ -103,11 +110,12 @@ export class TaskHelper {
             pattern:'solid',
             fgColor:{argb:'FFFF6347'}
         }; 
+        workingSheet.getRow(++row).getCell(1).value = "Blank cells mean the tag wasn't found on a page";
         ++row;
 
         // Meta
-        workingSheet.getRow(++row).getCell(1).value = "Report geneted on:";
-        workingSheet.getRow(row).getCell(2).value = new Date();
+        workingSheet.getRow(++row).getCell(1).value = "Report geneted on: "+ new Date();
+        ++row;
         workingSheet.getRow(++row).getCell(1).value = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
         workingSheet.getRow(row).getCell(2).value = "www.clydedsouza.net";
         return workingSheet;
@@ -252,6 +260,9 @@ export class TaskHelper {
         if(metatag == "og:title" || metatag == "title-tag"){
             return 60;
         }
+        if(metatag == "h1"){
+            return 70;
+        }
         if(metatag == "og:description" || metatag == "description"){
             return 300;
         }
@@ -259,7 +270,7 @@ export class TaskHelper {
     }
 
     processTitleTag(titleTagContent: string, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {
-        console.log("   ", "→", "Title", "=", titleTagContent); //titleTag.innerHTML
+        console.log("   ", "→", "Title", "=", titleTagContent);  
         worksheet = this.addExcelCellContent(
             worksheet,
             rowCounter,
@@ -277,10 +288,41 @@ export class TaskHelper {
         return worksheet;
     }
 
-    processTagLength(tagContent: string, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number,
+    processH1Tag(h1Tags: NodeListOf<HTMLHeadingElement>, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {  
+        var firstH1TagContent = h1Tags[0].innerHTML;
+        console.log("   ", "→", "H1", "=", firstH1TagContent); 
+        worksheet = this.addExcelCellContent(
+            worksheet,
+            rowCounter,
+            this.getMetadataTagPosition('h1', metaElements),
+            firstH1TagContent
+        ); 
+
+        worksheet = this.processTagLength(
+            firstH1TagContent,
+            metaElements,
+            worksheet,
+            rowCounter,
+            'h1-length',
+            this.getMaxLengthOfMetatag('h1'),
+            "Length of H1 tag");
+
+        worksheet = this.processTagLength(
+                h1Tags,
+                metaElements,
+                worksheet,
+                rowCounter,
+                'h1-number',
+                1,
+                "Number of H1 tags"); 
+
+        return worksheet;
+    }
+
+    processTagLength(tagContent: any, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number,
         key: string, maxLengthAllowed: number, consoleMessageForKey: string): Worksheet {
 
-        console.log("   ", "→", consoleMessageForKey, "=", tagContent.length); //titleTag.innerHTML
+        console.log("   ", "→", consoleMessageForKey, "=", tagContent.length); 
         let position = this.getMetadataTagPosition(key, metaElements);
         worksheet = this.addExcelCellContent(
             worksheet,

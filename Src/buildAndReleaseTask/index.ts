@@ -67,7 +67,17 @@ async function run() {
             var titleTag = virtualDocument.querySelector('title');
             if (titleTag != null) {
                 worksheet= taskHelper.processTitleTag(titleTag.innerHTML, metaElements, worksheet, rowCounter);               
-            }            
+            }    
+            
+            // H1 tag
+            var h1Tags = virtualDocument.querySelectorAll('h1');
+            if (h1Tags != null) { 
+                worksheet= taskHelper.processH1Tag( 
+                    h1Tags, 
+                    metaElements, 
+                    worksheet, 
+                    rowCounter);               
+            }   
             
             // Loop thru all meta tags
             var metaTags = virtualDocument.querySelectorAll('meta'); 
