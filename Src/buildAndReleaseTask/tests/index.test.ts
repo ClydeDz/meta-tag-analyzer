@@ -7,7 +7,7 @@ import * as ttm from 'azure-pipelines-task-lib/mock-test';
 describe('index / run', function () {
 
     it('should succeed with simple inputs', function(done: MochaDone) {
-        this.timeout(5000);    
+        this.timeout(150000);     
         let tp = path.join(__dirname, 'success.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
         tr.run();
@@ -20,7 +20,7 @@ describe('index / run', function () {
     });
 
     it('it should fail with no sitemap input', function(done: MochaDone) {
-        this.timeout(5000);    
+        this.timeout(15000);    
         let tp = path.join(__dirname, 'failure.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
         tr.run();

@@ -13,7 +13,7 @@ const ttm = __importStar(require("azure-pipelines-task-lib/mock-test"));
 //_________________________________________________________________________________
 describe('index / run', function () {
     it('should succeed with simple inputs', function (done) {
-        this.timeout(5000);
+        this.timeout(150000);
         let tp = path.join(__dirname, 'success.js');
         let tr = new ttm.MockTestRunner(tp);
         tr.run();
@@ -25,7 +25,7 @@ describe('index / run', function () {
         done();
     });
     it('it should fail with no sitemap input', function (done) {
-        this.timeout(5000);
+        this.timeout(15000);
         let tp = path.join(__dirname, 'failure.js');
         let tr = new ttm.MockTestRunner(tp);
         tr.run();
