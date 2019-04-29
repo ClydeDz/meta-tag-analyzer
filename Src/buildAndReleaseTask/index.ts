@@ -116,13 +116,14 @@ async function run() {
         wb.lastModifiedBy  = "Clyde D'Souza";
         wb.created = new Date();
         wb.xlsx.writeFile('./'+reportFilename+'.xlsx'); 
+        console.log();
+        console.log(reportFilename+'.xlsx created successfully.');
     }
     catch (err) {
         console.log();
         tl.setResult(tl.TaskResult.Failed, err.message);
     }
-    finally{
-        console.log();
+    finally {
         console.timeEnd("Execution time");
     }
 }
