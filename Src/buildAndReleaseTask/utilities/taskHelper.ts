@@ -178,12 +178,9 @@ export class TaskHelper {
     }
 
     printConsoleCopyright(){
-        console.log();
-        console.log("****************************************");
-        console.log("****************************************");
-        console.log("Meta Tag Analyzer (c) 2019 Clyde D'Souza");
-        console.log("****************************************");
-        console.log("****************************************");
+        console.log(); 
+        console.log("Meta Tag Analyzer (c) 2019 Clyde D'Souza"); 
+        console.log(); 
     }
 
     isOutputFilenameValid(filename: string): boolean{ 
