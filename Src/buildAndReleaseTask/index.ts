@@ -2,18 +2,24 @@ import * as tl from 'azure-pipelines-task-lib/task';
 import {Workbook, Row, Cell, Worksheet} from 'exceljs';
 
 import { TaskHelper } from "./utilities/taskHelper";
+import { ConsoleHelper } from "./utilities/consoleHelper";
+import { ExcelHelper } from "./utilities/excelHelper";
+import { AppConstants } from "./constants/appConstants";
 
 async function run() {
     console.time("Execution time");
-    const taskHelper = new TaskHelper();    
+    const taskHelper = new TaskHelper();   
+    const consoleHelper = new ConsoleHelper();  
+    const excelHelper = new ExcelHelper();     
+    const appConstants = new AppConstants();   
 
     try {
         // Task inputs
         const sitemapURL: string = tl.getInput('sitemapURL', true);
         const outputFilename: string = tl.getInput('outputFilename', false);
         var reportFilename = outputFilename;
-
-        taskHelper.printConsoleCopyright();
+        
+        consoleHelper.printConsoleCopyright();
 
         // Validate the URL
         if (!taskHelper.isSitemapURLValid(sitemapURL)) {
@@ -27,15 +33,15 @@ async function run() {
             reportFilename = "meta-tag-analyzer-report";
         }
  
-        taskHelper.printSitemapFileURL(sitemapURL);
+        consoleHelper.printSitemapFileURL(sitemapURL);
  
         var virtualDocument = await taskHelper.fetchURLAndLoadVirtualDocument(sitemapURL); 
-        const metaElements = taskHelper.loadMetadataTagsIncluded();
+        const metaElements = appConstants.getMetadataTagsIncluded();
 
         // Create EXCEL file and add first static row
-        var wb = new Workbook();
-        var worksheet = wb.addWorksheet('Meta Data Analysis');
-        worksheet = taskHelper.addExcelHeader(worksheet, metaElements);
+        var wb = new Workbook(); 
+        var worksheet = wb.addWorksheet(appConstants.reportWorksheetName);
+        worksheet = excelHelper.addExcelHeader(worksheet, metaElements);
         
         // Row 1 is the header of the table, that's why we're starting from 2
         var rowCounter = 2;
@@ -52,7 +58,7 @@ async function run() {
                 continue;
             }
              
-            taskHelper.printPageURL(currentURL); 
+            consoleHelper.printPageURL(currentURL); 
             worksheet.getRow(rowCounter).getCell(1).value = currentURL;  
             worksheet.getRow(rowCounter).getCell(1).fill = {
                 type: 'pattern',
@@ -111,7 +117,7 @@ async function run() {
             rowCounter++;
         }
 
-        worksheet = taskHelper.addExcelFooter(worksheet, ++rowCounter);
+        worksheet = excelHelper.addExcelFooter(worksheet, ++rowCounter);
         wb.creator = "Clyde D'Souza";
         wb.lastModifiedBy  = "Clyde D'Souza";
         wb.created = new Date();

@@ -1,5 +1,6 @@
 import * as assert from 'assert';
 import { TaskHelper } from "../../utilities/taskHelper";
+import { AppConstants } from '../../constants/appConstants';
 
 //_________________________________________________________________________________
 
@@ -120,7 +121,8 @@ describe('utilities / taskHelper / getTransformedInvalidOutputFilename', functio
 describe('utilities / taskHelper / getMetadataTagPosition', function () {
     it('should succeed with valid tags', function(done: MochaDone) {   
         const taskHelper = new TaskHelper();
-        const metatags = taskHelper.loadMetadataTagsIncluded();
+        const appConstants = new AppConstants();
+        const metatags = appConstants.getMetadataTagsIncluded();
 
         var position = taskHelper.getMetadataTagPosition("title-tag", metatags);
         assert.equal(position, 2, 'should be 2'); 
@@ -130,7 +132,8 @@ describe('utilities / taskHelper / getMetadataTagPosition', function () {
     });   
     it('should return 0 for invalid tags', function(done: MochaDone) {   
         const taskHelper = new TaskHelper();
-        const metatags = taskHelper.loadMetadataTagsIncluded();
+        const appConstants = new AppConstants();
+        const metatags = appConstants.getMetadataTagsIncluded();
 
         var position = taskHelper.getMetadataTagPosition("script", metatags);
         assert.equal(position, 0, 'should be 0');
@@ -145,7 +148,8 @@ describe('utilities / taskHelper / getMetadataTagPosition', function () {
 describe('utilities / taskHelper / isKeyUnderNameAttrCategory', function () {
     it('should true for name-attribute tags', function(done: MochaDone) {   
         const taskHelper = new TaskHelper();
-        const metatags = taskHelper.loadMetadataTagsIncluded();
+        const appConstants = new AppConstants();
+        const metatags = appConstants.getMetadataTagsIncluded();
 
         var actual = taskHelper.isKeyUnderNameAttrCategory("title", metatags);
         assert.equal(actual, true, 'should be true'); 
@@ -155,7 +159,8 @@ describe('utilities / taskHelper / isKeyUnderNameAttrCategory', function () {
     });   
     it('should return false for non name-attribute tags', function(done: MochaDone) {   
         const taskHelper = new TaskHelper();
-        const metatags = taskHelper.loadMetadataTagsIncluded();
+        const appConstants = new AppConstants();
+        const metatags = appConstants.getMetadataTagsIncluded();
 
         var actual = taskHelper.isKeyUnderNameAttrCategory("script", metatags);
         assert.equal(actual, false, 'should be 0');
@@ -173,7 +178,8 @@ describe('utilities / taskHelper / isKeyUnderNameAttrCategory', function () {
 describe('utilities / taskHelper / isKeyUnderPropertyAttrCategory', function () {
     it('should true for name-attribute tags', function(done: MochaDone) {   
         const taskHelper = new TaskHelper();
-        const metatags = taskHelper.loadMetadataTagsIncluded();
+        const appConstants = new AppConstants();
+        const metatags = appConstants.getMetadataTagsIncluded();
 
         var actual = taskHelper.isKeyUnderPropertyAttrCategory("og:description", metatags);
         assert.equal(actual, true, 'should be true'); 
@@ -183,7 +189,8 @@ describe('utilities / taskHelper / isKeyUnderPropertyAttrCategory', function () 
     });   
     it('should return false for non name-attribute tags', function(done: MochaDone) {   
         const taskHelper = new TaskHelper();
-        const metatags = taskHelper.loadMetadataTagsIncluded();
+        const appConstants = new AppConstants();
+        const metatags = appConstants.getMetadataTagsIncluded();
 
         var actual = taskHelper.isKeyUnderPropertyAttrCategory("Keywords", metatags);
         assert.equal(actual, false, 'should be 0');

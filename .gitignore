@@ -341,6 +341,9 @@ Src/buildAndReleaseTask/test-results.xml
 # Exclude js files since we'll compile and generate them from .ts files
 Src/buildAndReleaseTask/*.js
 Src/buildAndReleaseTask/utilities/*.js
+Src/buildAndReleaseTask/constants/*.js
 Src/buildAndReleaseTask/tests/*.js
 Src/buildAndReleaseTask/tests/utilities/*test.js
+Src/buildAndReleaseTask/tests/mockRunners/*.js
+Src/buildAndReleaseTask/tests/mockRunners/*test.js
 
