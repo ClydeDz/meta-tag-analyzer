@@ -23,7 +23,7 @@ async function run() {
 
         // Validate the file name
         if(!taskHelper.isOutputFilenameValid(outputFilename)){
-            console.log(outputFilename, "was determined to be of an invalid file format. Default file name has been assigned to the output file.");
+            console.log("Filename", taskHelper.getTransformedInvalidOutputFilename(outputFilename), "was determined to be of an invalid file format. Default file name has been assigned to the output file.");
             reportFilename = "meta-tag-analyzer-report";
         }
  

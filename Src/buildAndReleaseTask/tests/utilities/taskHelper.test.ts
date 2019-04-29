@@ -92,3 +92,19 @@ describe('utilities / taskHelper / isOutputFilenameValid', function () {
         done();
     });  
 });
+
+//_________________________________________________________________________________
+
+describe('utilities / taskHelper / getTransformedInvalidOutputFilename', function () {
+    it('should succeed with valid filename', function(done: MochaDone) {   
+        const taskHelper = new TaskHelper();
+
+        var transformedFilename = taskHelper.getTransformedInvalidOutputFilename("");
+        assert.equal(transformedFilename, "<input was left blank>", 'should be <input was left blank>');
+        transformedFilename = taskHelper.getTransformedInvalidOutputFilename(null);
+        assert.equal(transformedFilename, "<input was left blank>", 'should be <input was left blank>');
+        transformedFilename = taskHelper.getTransformedInvalidOutputFilename("meta report");
+        assert.equal(transformedFilename, "meta report", 'should be meta report');
+        done();
+    });    
+});

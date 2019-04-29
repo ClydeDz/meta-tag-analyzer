@@ -193,6 +193,12 @@ export class TaskHelper {
         return !invalidFilename; 
     }
 
+    getTransformedInvalidOutputFilename(filename: string | null): string{ 
+        if(filename == null || filename == "") return "<input was left blank>";
+
+        return filename;
+    }
+
     processNameMetaTags(nameAttribute: string, metaElements: MetadataTagsIncluded[], metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {
         if (!this.isKeyUnderNameAttrCategory(nameAttribute, metaElements)) {
             return worksheet;
