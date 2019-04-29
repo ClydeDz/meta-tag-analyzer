@@ -188,8 +188,9 @@ export class TaskHelper {
 
     isOutputFilenameValid(filename: string): boolean{ 
         if(filename == null || filename == "") return false;
-
-        return !(filename.indexOf('.') >= 0);
+        
+        var invalidFilename = filename.indexOf('.xlsx') >= 0 || filename.indexOf('.xls') >= 0;
+        return !invalidFilename; 
     }
 
     processNameMetaTags(nameAttribute: string, metaElements: MetadataTagsIncluded[], metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {

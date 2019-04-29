@@ -70,7 +70,8 @@ describe('utilities / taskHelper / isOutputFilenameValid', function () {
         assert.equal(isValidFilename, true, 'should have succeeded');
         isValidFilename = taskHelper.isOutputFilenameValid("meta report post release pipeline");
         assert.equal(isValidFilename, true, 'should have succeeded');
-
+        isValidFilename = taskHelper.isOutputFilenameValid("MetaTagReport-DemoBuild-20190429.2");
+        assert.equal(isValidFilename, true, 'should have succeeded');
         done();
     });    
 
@@ -82,7 +83,12 @@ describe('utilities / taskHelper / isOutputFilenameValid', function () {
         assert.equal(isValidFilename, false, 'should have succeeded');
         isValidFilename = taskHelper.isOutputFilenameValid("report.xlsx");
         assert.equal(isValidFilename, false, 'should have succeeded');
-
+        isValidFilename = taskHelper.isOutputFilenameValid("report.xlsx.latestreport");
+        assert.equal(isValidFilename, false, 'should have succeeded');
+        isValidFilename = taskHelper.isOutputFilenameValid("report.xls");
+        assert.equal(isValidFilename, false, 'should have succeeded');
+        isValidFilename = taskHelper.isOutputFilenameValid("report.xls.latestreport");
+        assert.equal(isValidFilename, false, 'should have succeeded');
         done();
     });  
 });
