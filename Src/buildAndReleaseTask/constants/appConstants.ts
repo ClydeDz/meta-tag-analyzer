@@ -21,6 +21,10 @@ export class AppConstants{
     readonly highlightCellColor:string = "FFFFFF00";
     readonly copyrightText:string = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
 
+    /**
+     * Returns a list of metadata tags the is included in the report along with other details
+     * useful for generating a report
+     */
     getMetadataTagsIncluded() : Array<MetadataTagsIncluded> {
         var metadataElements = new Array<MetadataTagsIncluded>(); 
         var columnPosition = 1;
