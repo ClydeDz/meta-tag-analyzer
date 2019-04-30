@@ -5,13 +5,14 @@ import * as domino from 'domino';
 import { ExcelHelper } from "./excelHelper";
 import { MetadataTagsIncluded } from '../constants/appConstants';
 
-
-
 export class TaskHelper {  
-    excelHelper = new ExcelHelper();   
+    excelHelper = new ExcelHelper();         
 
-      
-
+    /**
+     * Get the column position of the supplied key from the list of metatags data
+     * @param search Key to search
+     * @param allMetaTags List of all metatags included in the report
+     */
     getMetadataTagPosition(search: string, allMetaTags: MetadataTagsIncluded[]): number {
         for (var si = 0; si < allMetaTags.length; si++){
             if(search == allMetaTags[si].key){
@@ -21,20 +22,29 @@ export class TaskHelper {
         return 0;
     }
 
-    
-
-    
-
+    /**
+     * Validates if the sitemap URL supplied is of a valid format
+     * @param sitemapURL The sitemap URL
+     */
     isSitemapURLValid(sitemapURL: string): boolean {
          var isValidURL = this._isURLValid(sitemapURL);
          return isValidURL ? sitemapURL.endsWith('.xml') : isValidURL;
     };
 
+    /**
+     * Validates if the URL supplied is of a valid format
+     * @param pageURL The URL of the publicly accessible page
+     */
     isPageURLValid(pageURL: string): boolean {
         var isValidURL = this._isURLValid(pageURL);
         return isValidURL ? !pageURL.endsWith('.pdf') : isValidURL;
-   };
+    };
 
+    /**
+     * Returns true if the key supplied is of the category 'nameAttr'
+     * @param key Key to search
+     * @param allMetaTags List of all metatags included in the report
+     */
     isKeyUnderNameAttrCategory(key: string, allMetaTags: MetadataTagsIncluded[]): boolean { 
         for (var si = 0; si < allMetaTags.length; si++){
             if(key == allMetaTags[si].key && allMetaTags[si].category=="nameAttr"){
@@ -44,6 +54,11 @@ export class TaskHelper {
         return false;
     };
 
+    /**
+     * Returns true if the key supplied is of the category 'propertyAttr'
+     * @param key Key to search
+     * @param allMetaTags List of all metatags included in the report
+     */
     isKeyUnderPropertyAttrCategory(key: string, allMetaTags: MetadataTagsIncluded[]): boolean {
         for (var si = 0; si < allMetaTags.length; si++){
             if(key == allMetaTags[si].key && allMetaTags[si].category=="propertyAttr"){
@@ -52,8 +67,6 @@ export class TaskHelper {
         } 
         return false;
     };
-
-    
 
     /**
      * Makes a request to the supplied URL and creates a virtual document 
@@ -64,20 +77,31 @@ export class TaskHelper {
         return domino.createWindow(currentURLXHRResult.content).document;
     }
  
-
-    isOutputFilenameValid(filename: string): boolean{ 
+    /**
+     * Validates if the filename supplied is of a valid format
+     * @param filename Filename supplied by the user
+     */
+    isOutputFilenameValid(filename: string): boolean { 
         if(filename == null || filename == "") return false;
         
         var invalidFilename = filename.indexOf('.xlsx') >= 0 || filename.indexOf('.xls') >= 0;
         return !invalidFilename; 
     }
 
+    /**
+     * Handles invalid or blank filename and returns a valid filename instead
+     * @param filename Filename supplied by the user
+     */
     getTransformedInvalidOutputFilename(filename: string | null): string{ 
         if(filename == null || filename == "") return "<input was left blank>";
 
         return filename;
     }
 
+    /**
+     * Gets the max length of the supplied metatag
+     * @param metatag Mettag key to check
+     */
     getMaxLengthOfMetatag(metatag: string): number{
         if(metatag == "og:title" || metatag == "title-tag"){
             return 60;
@@ -91,13 +115,26 @@ export class TaskHelper {
         return 0;
     }
 
+    /**
+     * Validates the supplied URL
+     * @param userURL URL of the page 
+     */
     _isURLValid(userURL: string): boolean {
         return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(userURL);
     };
 
+
     //________________________Process tags_____________________________
 
 
+    /**
+     * Process meta tags with name attribute
+     * @param nameAttribute The value of the name attribute
+     * @param metaElements List of metatags included in the report
+     * @param metaTag The metatag HTML element in context
+     * @param worksheet The worksheet that this report is being written to
+     * @param rowCounter Row number to write content  
+     */
     processNameMetaTags(nameAttribute: string, metaElements: MetadataTagsIncluded[], metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {
         if (!this.isKeyUnderNameAttrCategory(nameAttribute, metaElements)) {
             return worksheet;
@@ -130,6 +167,14 @@ export class TaskHelper {
         return worksheet;
     }
 
+    /**
+     * Process meta tags with property attribute
+     * @param propertyAttribute The value of the property attribute
+     * @param metaElements List of metatags included in the report
+     * @param metaTag The metatag HTML element in context
+     * @param worksheet The worksheet that this report is being written to
+     * @param rowCounter Row number to write content 
+     */
     processPropertyMetaTags(propertyAttribute: string, metaElements: MetadataTagsIncluded[], metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {
         if (!this.isKeyUnderPropertyAttrCategory(propertyAttribute, metaElements)) {
             return worksheet;
@@ -163,6 +208,13 @@ export class TaskHelper {
     }
 
 
+    /**
+     * Process title tag
+     * @param titleTagContent The value of the title tag
+     * @param metaElements List of metatags included in the report
+     * @param worksheet The worksheet that this report is being written to
+     * @param rowCounter Row number to write content  
+     */
     processTitleTag(titleTagContent: string, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {
         console.log("   ", "→", "Title", "=", titleTagContent);  
         worksheet = this.excelHelper.addExcelCellContent(
@@ -183,6 +235,13 @@ export class TaskHelper {
     }
 
 
+    /**
+     * Process H1 tags
+     * @param h1Tags The value of the H1 tag
+     * @param metaElements List of metatags included in the report
+     * @param worksheet The worksheet that this report is being written to
+     * @param rowCounter Row number to write content  
+     */
     processH1Tag(h1Tags: NodeListOf<HTMLHeadingElement>, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {  
         var firstH1TagContent = h1Tags[0].innerHTML;
         console.log("   ", "→", "H1", "=", firstH1TagContent); 
@@ -214,6 +273,17 @@ export class TaskHelper {
         return worksheet;
     }
 
+    /**
+     * Process tag length of the meta tag. Handles how to report scenarios where length
+     * is 0 or over the ideal limit
+     * @param tagContent Content of the meta tag supplied
+     * @param metaElements List of metatags included in the report
+     * @param worksheet The worksheet that this report is being written to
+     * @param rowCounter Row number to write content  
+     * @param key Key of the meta tag in context
+     * @param maxLengthAllowed Max length allowed for the key supplied
+     * @param consoleMessageForKey Message to be displayed in log for this tag
+     */
     processTagLength(tagContent: any, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number,
         key: string, maxLengthAllowed: number, consoleMessageForKey: string): Worksheet {
 
