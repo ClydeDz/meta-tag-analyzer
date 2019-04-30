@@ -1,4 +1,8 @@
-export class ConsoleHelper {  
+export class ConsoleHelper {
+    /**
+     * Prints supplied URL on the console
+     * @param url URL to be printed
+     */  
     printPageURL(url: string){
         console.log("");
         console.log("----------------------------------");
@@ -6,6 +10,10 @@ export class ConsoleHelper {
         console.log("----------------------------------");
     }
 
+    /**
+     * Prints the supplied sitemap URL on the console
+     * @param url URL of the sitemap file
+     */
     printSitemapFileURL(url: string){
         console.log("");
         console.log("==================================================");
@@ -13,6 +21,9 @@ export class ConsoleHelper {
         console.log("==================================================");
     }
 
+    /**
+     * Prints a copyright message on the console
+     */
     printConsoleCopyright(){
         console.log(); 
         console.log("Meta Tag Analyzer (c) 2019 Clyde D'Souza"); 
