@@ -3,6 +3,11 @@ import { MetadataTagsIncluded } from "../constants/appConstants";
 
 export class ExcelHelper {  
 
+    /**
+     * Writes the first row of the report
+     * @param workingSheet The current worksheet that the report is being written
+     * @param allMetaTags The list of metatags included in the report
+     */
     addExcelHeader(workingSheet: Worksheet, allMetaTags: MetadataTagsIncluded[]): Worksheet {
         let cellA1 = workingSheet.getRow(1).getCell(1);
         cellA1.value = "URL";
@@ -30,6 +35,11 @@ export class ExcelHelper {
         return workingSheet;
     }
     
+    /**
+     * Writes footer content to the Excel report
+     * @param workingSheet The current worksheet that the report is being written
+     * @param row The next row number
+     */
     addExcelFooter(workingSheet: Worksheet, row: number): Worksheet {
         // Legend
         workingSheet.getRow(++row).getCell(1).value = "Legend:";
@@ -58,6 +68,13 @@ export class ExcelHelper {
         return workingSheet;
     }
 
+    /**
+     * 
+     * @param workingSheet The current worksheet that the report is being written
+     * @param row The row number of the cell to be written to
+     * @param column The column number of the cell to be written to
+     * @param content The content to be printed in the cell
+     */
     addExcelCellContent(workingSheet: Worksheet, row: number, column: number, content: any): Worksheet{
         workingSheet.getRow(row).getCell(column).value = content;
         return workingSheet;
