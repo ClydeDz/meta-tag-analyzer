@@ -16,6 +16,9 @@ export class MetadataTagsIncluded {
 export class AppConstants{
 
     readonly reportWorksheetName:string = "Meta Data Analysis";
+    readonly warningCellColor:string = "FFFF8C00";
+    readonly alertCellColor:string = "FFFF6347";
+    readonly highlightCellColor:string = "FFFFFF00";
 
     getMetadataTagsIncluded() : Array<MetadataTagsIncluded> {
         var metadataElements = new Array<MetadataTagsIncluded>(); 

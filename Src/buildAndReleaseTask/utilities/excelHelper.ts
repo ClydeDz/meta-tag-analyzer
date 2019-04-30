@@ -1,8 +1,9 @@
 import { Worksheet } from "exceljs";
-import { MetadataTagsIncluded } from "../constants/appConstants";
+import { MetadataTagsIncluded, AppConstants } from "../constants/appConstants";
 
 export class ExcelHelper {  
-
+    appConstants = new AppConstants();   
+      
     /**
      * Writes the first row of the report
      * @param workingSheet The current worksheet that the report is being written
@@ -14,7 +15,7 @@ export class ExcelHelper {
         cellA1.fill = {
             type: 'pattern',
             pattern:'solid',
-            fgColor:{argb:'FFFFFF00'} 
+            fgColor:{argb:this.appConstants.highlightCellColor} 
         };
         cellA1.font = {
             bold: true
@@ -26,7 +27,7 @@ export class ExcelHelper {
             cell.fill = {
                 type: 'pattern',
                 pattern:'solid',
-                fgColor:{argb:'FFFFFF00'}
+                fgColor:{argb:this.appConstants.highlightCellColor}
             };
             cell.font = {
                 bold: true
@@ -48,14 +49,14 @@ export class ExcelHelper {
         legendCell1.fill = {
             type: 'pattern',
             pattern:'solid',
-            fgColor:{argb:'FFFF8C00'}
+            fgColor:{argb:this.appConstants.warningCellColor}
         };
         let legendCell2 = workingSheet.getRow(row).getCell(2);
         legendCell2.value = "No data when required";
         legendCell2.fill = {
             type: 'pattern',
             pattern:'solid',
-            fgColor:{argb:'FFFF6347'}
+            fgColor:{argb:this.appConstants.alertCellColor}
         }; 
         workingSheet.getRow(++row).getCell(1).value = "Blank cells mean the tag wasn't found on a page";
         ++row;
