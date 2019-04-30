@@ -8,10 +8,10 @@
     "author": "Clyde D'Souza",
     "version": {
         "Major": 0,
-        "Minor": 3,
+        "Minor": 4,
         "Patch": 0
     },
-    "instanceNameFormat": "Meta Tag Analyzer",
+    "instanceNameFormat": "Run: Meta Tag Analyzer",
     "inputs": [
         {
             "name": "sitemapURL",
