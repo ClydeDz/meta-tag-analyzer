@@ -1,5 +1,5 @@
 # Meta Tag Analyzer
-An Azure DevOps task that generates a report after analysing the meta tags of each page on your website. Install this extension from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer).   
+An Azure DevOps task that generates a report after analysing the meta tags of each page on your website. Install this extension from the [Visual Studio Marketplace](http://bit.ly/metataganalyzer).   
 
 [![Build status](https://clydedsouza.visualstudio.com/Meta%20Tag%20Analyzer/_apis/build/status/Master%20build)](https://clydedsouza.visualstudio.com/Meta%20Tag%20Analyzer/_build/latest?definitionId=21)
 [![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/clydedsouza.meta-tag-analyzer.svg?color=brightgreen)](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer)
@@ -8,7 +8,7 @@ An Azure DevOps task that generates a report after analysing the meta tags of ea
 ## What is Meta Tag Analyzer?
 **Preface:** We all agree how important meta tags are to our website. It helps describe the contents of a page and thereby providing more useful information for search engines to display. You can also dictate what information is shown when you share a page from your website on social media.   
 
-**Meta Tag Analyzer** is an Azure DevOps task that provides you with the ability to automatically run a check on your website and generate a report of the meta tag information. This is useful
+**Meta Tag Analyzer** is an Azure DevOps task that provides you with the ability to automatically run a check on your website and generate a report of the meta tag information. Benefits:
 - **Assurance:** Ensure that your last release hasn't changed anything unexpectedly that will be impact your online presence   
 - **Automatic and part of your value stream:** Don't neglect the significance of meta tag content by checking this on a one-off basis. Include this as part of your pipeline and part of each release artifact.
 - **Comprehensive and easy to read:** Simply download this report and email it to your marketing team (or any other non-technical team) to proof-read. 
@@ -19,7 +19,7 @@ Meta Tag Analyzer Azure DevOps task will:
  
 ## Usage
 ### Installing   
-Install Meta Tag Analyzer extension for your Azure DevOps pipeline from [this page](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer). Refer to Microsoft's [documentation page](https://docs.microsoft.com/en-us/azure/devops/marketplace/install-extension?view=azure-devops&viewFallbackFrom=tfs-2015) if you need help installing an extension, in general.  
+Install Meta Tag Analyzer extension for your Azure DevOps pipeline from [this page](http://bit.ly/metataganalyzer). Refer to Microsoft's [documentation page](https://docs.microsoft.com/en-us/azure/devops/marketplace/install-extension?view=azure-devops&viewFallbackFrom=tfs-2015) if you need help installing an extension, in general.  
 
 ### Adding the task   
 Next, in your build or release task, click on *add a new task* and search for *Meta Tag Analyzer*. Click on *Add*.
