@@ -16,7 +16,7 @@
     ],
     "tags": [
         "seo",
-        "meta tags",
+        "metatags",
         "meta tag analyzer",
         "reports",
         "excel",
@@ -25,7 +25,11 @@
         "post build",
         "post release",
         "automate",
-        "open graph"
+        "open graph",
+        "Azure DevOps",
+        "build",
+        "release",
+        "pipeline"
     ],
     "content": {
         "details": {
