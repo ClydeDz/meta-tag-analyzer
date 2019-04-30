@@ -1,4 +1,8 @@
+import { AppConstants } from "../constants/appConstants";
+
 export class ConsoleHelper {
+    appConstants = new AppConstants();   
+
     /**
      * Prints supplied URL on the console
      * @param url URL to be printed
@@ -26,7 +30,7 @@ export class ConsoleHelper {
      */
     printConsoleCopyright(){
         console.log(); 
-        console.log("Meta Tag Analyzer (c) 2019 Clyde D'Souza"); 
+        console.log(this.appConstants.copyrightText); 
         console.log(); 
     } 
 }

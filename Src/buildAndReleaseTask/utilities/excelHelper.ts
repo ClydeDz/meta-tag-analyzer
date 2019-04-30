@@ -64,7 +64,7 @@ export class ExcelHelper {
         // Meta
         workingSheet.getRow(++row).getCell(1).value = "Report generated on: ";
         workingSheet.getRow(row).getCell(2).value = "" + new Date();
-        workingSheet.getRow(++row).getCell(1).value = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
+        workingSheet.getRow(++row).getCell(1).value = this.appConstants.copyrightText;
         workingSheet.getRow(row).getCell(2).value = "www.clydedsouza.net";
         return workingSheet;
     }

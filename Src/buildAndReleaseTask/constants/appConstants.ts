@@ -19,6 +19,7 @@ export class AppConstants{
     readonly warningCellColor:string = "FFFF8C00";
     readonly alertCellColor:string = "FFFF6347";
     readonly highlightCellColor:string = "FFFFFF00";
+    readonly copyrightText:string = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
 
     getMetadataTagsIncluded() : Array<MetadataTagsIncluded> {
         var metadataElements = new Array<MetadataTagsIncluded>(); 
