@@ -131,6 +131,7 @@ async function run() {
     }
     finally {
         console.timeEnd("Execution time");
+        console.log();
     }
 }
 
