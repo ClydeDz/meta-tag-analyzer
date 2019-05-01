@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "meta-tag-analyzer",
     "name": "Meta Tag Analyzer",
-    "version": "0.6.0",
+    "version": "1.0.0",
     "publisher": "clydedsouza",
     "public": true,
     "targets": [

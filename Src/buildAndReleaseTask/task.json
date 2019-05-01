@@ -7,8 +7,8 @@
     "category": "Utility",
     "author": "Clyde D'Souza",
     "version": {
-        "Major": 0,
-        "Minor": 6,
+        "Major": 1,
+        "Minor": 0,
         "Patch": 0
     },
     "instanceNameFormat": "Run: Meta Tag Analyzer",
