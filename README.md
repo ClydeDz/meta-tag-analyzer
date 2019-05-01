@@ -44,8 +44,8 @@ Since you cannot publish artifacts from your release definition, ensure you eith
 - Trigger a *'post release'* build from the release pipeline.  
 [Read more](https://github.com/ClydeDz/meta-tag-analyzer/wiki#usage) for ideas around this.  
 
+## Release notes   
+Refer to the detailed release notes found [here](https://github.com/ClydeDz/meta-tag-analyzer/releases).  
+
 ## Credits  
 Meta Tag Analyzer (c) 2019 [Clyde D'Souza](https://clydedsouza.net)  
-
-## Release notes   
-Refer to the detailed release notes found [here](https://github.com/ClydeDz/meta-tag-analyzer/releases)
