@@ -6,7 +6,7 @@ import { ExcelUtil } from "./excelUtil";
 import { MetadataTagsIncluded } from '../constants/appConstants';
 
 export class TaskUtil {  
-    excelHelper = new ExcelUtil();         
+    excelUtil = new ExcelUtil();         
 
     /**
      * Get the column position of the supplied key from the list of metatags data
@@ -147,7 +147,7 @@ export class TaskUtil {
 
         console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
         var position = this.getMetadataTagPosition(nameAttribute, metaElements);
-        worksheet = this.excelHelper.addExcelCellContent(
+        worksheet = this.excelUtil.addExcelCellContent(
             worksheet, 
             rowCounter, 
             position, 
@@ -187,7 +187,7 @@ export class TaskUtil {
 
         console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
         var position = this.getMetadataTagPosition(propertyAttribute, metaElements);
-        worksheet = this.excelHelper.addExcelCellContent(
+        worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
             position,
@@ -217,7 +217,7 @@ export class TaskUtil {
      */
     processTitleTag(titleTagContent: string, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {
         console.log("   ", "→", "Title", "=", titleTagContent);  
-        worksheet = this.excelHelper.addExcelCellContent(
+        worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
             this.getMetadataTagPosition('title-tag', metaElements),
@@ -245,7 +245,7 @@ export class TaskUtil {
     processH1Tag(h1Tags: NodeListOf<HTMLHeadingElement>, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {  
         var firstH1TagContent = h1Tags[0].innerHTML;
         console.log("   ", "→", "H1", "=", firstH1TagContent); 
-        worksheet = this.excelHelper.addExcelCellContent(
+        worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
             this.getMetadataTagPosition('h1', metaElements),
@@ -289,7 +289,7 @@ export class TaskUtil {
 
         console.log("   ", "→", consoleMessageForKey, "=", tagContent.length); 
         let position = this.getMetadataTagPosition(key, metaElements);
-        worksheet = this.excelHelper.addExcelCellContent(
+        worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
             position,

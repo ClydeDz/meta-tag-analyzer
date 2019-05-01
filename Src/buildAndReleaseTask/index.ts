@@ -8,9 +8,9 @@ import { AppConstants } from "./constants/appConstants";
 
 async function run() {
     console.time("Execution time");
-    const taskHelper = new TaskUtil();   
-    const consoleHelper = new ConsoleUtil();  
-    const excelHelper = new ExcelUtil();     
+    const taskUtil = new TaskUtil();   
+    const consoleUtil = new ConsoleUtil();  
+    const excelUtil = new ExcelUtil();     
     const appConstants = new AppConstants();   
 
     try {
@@ -19,29 +19,29 @@ async function run() {
         const outputFilename: string = tl.getInput('outputFilename', false);
         var reportFilename = outputFilename;
         
-        consoleHelper.printConsoleCopyright();
+        consoleUtil.printConsoleCopyright();
 
         // Validate the URL
-        if (!taskHelper.isSitemapURLValid(sitemapURL)) {
+        if (!taskUtil.isSitemapURLValid(sitemapURL)) {
             tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
             return;
         } 
 
         // Validate the file name
-        if(!taskHelper.isOutputFilenameValid(outputFilename)){
-            console.log("Filename", taskHelper.getTransformedInvalidOutputFilename(outputFilename), "was determined to be of an invalid file format. Default file name has been assigned to the output file.");
+        if(!taskUtil.isOutputFilenameValid(outputFilename)){
+            console.log("Filename", taskUtil.getTransformedInvalidOutputFilename(outputFilename), "was determined to be of an invalid file format. Default file name has been assigned to the output file.");
             reportFilename = "meta-tag-analyzer-report";
         }
  
-        consoleHelper.printSitemapFileURL(sitemapURL);
+        consoleUtil.printSitemapFileURL(sitemapURL);
  
-        var virtualDocument = await taskHelper.fetchURLAndLoadVirtualDocument(sitemapURL); 
+        var virtualDocument = await taskUtil.fetchURLAndLoadVirtualDocument(sitemapURL); 
         const metaElements = appConstants.getMetadataTagsIncluded();
 
         // Create EXCEL file and add first static row
         var wb = new Workbook(); 
         var worksheet = wb.addWorksheet(appConstants.reportWorksheetName);
-        worksheet = excelHelper.addExcelHeader(worksheet, metaElements);
+        worksheet = excelUtil.addExcelHeader(worksheet, metaElements);
         
         // Row 1 is the header of the table, that's why we're starting from 2
         var rowCounter = 2;
@@ -54,11 +54,11 @@ async function run() {
             var currentURL = allPagesInSitemap[i].innerHTML; 
 
             // Check if we need to exclude URLs. Example: .pdf
-            if (!taskHelper.isPageURLValid(currentURL)) {
+            if (!taskUtil.isPageURLValid(currentURL)) {
                 continue;
             }
              
-            consoleHelper.printPageURL(currentURL); 
+            consoleUtil.printPageURL(currentURL); 
             worksheet.getRow(rowCounter).getCell(1).value = currentURL;  
             worksheet.getRow(rowCounter).getCell(1).fill = {
                 type: 'pattern',
@@ -67,18 +67,18 @@ async function run() {
             }; 
 
             // Makes a request to the sitemap file and creates a virtual document
-            var virtualDocument = await taskHelper.fetchURLAndLoadVirtualDocument(currentURL);
+            var virtualDocument = await taskUtil.fetchURLAndLoadVirtualDocument(currentURL);
 
             // Title tag
             var titleTag = virtualDocument.querySelector('title');
             if (titleTag != null) {
-                worksheet= taskHelper.processTitleTag(titleTag.innerHTML, metaElements, worksheet, rowCounter);               
+                worksheet= taskUtil.processTitleTag(titleTag.innerHTML, metaElements, worksheet, rowCounter);               
             }    
             
             // H1 tag
             var h1Tags = virtualDocument.querySelectorAll('h1');
             if (h1Tags != null) { 
-                worksheet= taskHelper.processH1Tag( 
+                worksheet= taskUtil.processH1Tag( 
                     h1Tags, 
                     metaElements, 
                     worksheet, 
@@ -100,7 +100,7 @@ async function run() {
                     }
 
                     // Filters only those meta tags we're interested in
-                    worksheet = taskHelper.processNameMetaTags(nameAttribute, metaElements, metaTags[im], worksheet, rowCounter); 
+                    worksheet = taskUtil.processNameMetaTags(nameAttribute, metaElements, metaTags[im], worksheet, rowCounter); 
                 }
 
                 // Example: <meta property="og:type" content="website">
@@ -110,14 +110,14 @@ async function run() {
                     }
 
                     // Filters only those meta tags we're interested in
-                    worksheet = taskHelper.processPropertyMetaTags(propertyAttribute, metaElements, metaTags[im], worksheet, rowCounter); 
+                    worksheet = taskUtil.processPropertyMetaTags(propertyAttribute, metaElements, metaTags[im], worksheet, rowCounter); 
                 }
             } 
 
             rowCounter++;
         }
 
-        worksheet = excelHelper.addExcelFooter(worksheet, ++rowCounter);
+        worksheet = excelUtil.addExcelFooter(worksheet, ++rowCounter);
         wb.creator = "Clyde D'Souza";
         wb.lastModifiedBy  = "Clyde D'Souza";
         wb.created = new Date();
