@@ -7,10 +7,10 @@ An Azure DevOps task that generates a report after analysing the meta tags of ea
 **Meta Tag Analyzer** is an Azure DevOps task that provides you with the ability to automatically run a check on your website and generate a report of the meta tag information. Benefits:
 - **Assurance:** Ensure that your last release hasn't changed anything unexpectedly that will be impact your online presence   
 - **Automatic and part of your value stream:** Don't neglect the significance of meta tag content by checking this on a one-off basis. Include this as part of your pipeline and part of each release artifact.
-- **Comprehensive and easy to read:** Simply download this report and email it to your marketing team (or any other non-technical team) to proof-read. 
+- **Comprehensive and easy to read:** Simply download this report and email it to the team that looks after your online presence. 
 
 Meta Tag Analyzer Azure DevOps task will:   
-- Generate an Excel report after analysing the meta tags of all your pages. It will look  something like [this](https://github.com/ClydeDz/meta-tag-analyzer/blob/master/Sample/meta-tag-analyzer-report.xlsx)
+- Generate an Excel report after analysing the meta tags of all your pages ([Download sample report](https://github.com/ClydeDz/meta-tag-analyzer/blob/master/Sample/meta-tag-analyzer-report.xlsx)).
 - Log the analysis to the console too, so you get the same information from within the pipeline itself.     
  
 ## Usage
@@ -18,7 +18,7 @@ Meta Tag Analyzer Azure DevOps task will:
 Install Meta Tag Analyzer extension for your Azure DevOps pipeline from [this page](http://bit.ly/metataganalyzer). Refer to Microsoft's [documentation page](https://docs.microsoft.com/en-us/azure/devops/marketplace/install-extension?view=azure-devops&viewFallbackFrom=tfs-2015) if you need help installing an extension, in general.  
 
 ### Adding the task   
-Next, in your build or release task, click on *add a new task* and search for *Meta Tag Analyzer*. Click on *Add*.
+Next, in your build or release task, click on *Add a new task* and search for *Meta Tag Analyzer*. Click on *Add*.
 
 ### Configuring inputs   
 | Inputs             | Required (Y/N)  | Explanation  |
