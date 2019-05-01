@@ -1,7 +1,7 @@
 import { Worksheet } from "exceljs";
 import { MetadataTagsIncluded, AppConstants } from "../constants/appConstants";
 
-export class ExcelHelper {  
+export class ExcelUtil {  
     appConstants = new AppConstants();   
       
     /**

@@ -2,11 +2,11 @@ import {Workbook, Row, Cell, Worksheet} from 'exceljs';
 import * as WebRequest from 'web-request'; 
 import * as domino from 'domino'; 
 
-import { ExcelHelper } from "./excelHelper";
+import { ExcelUtil } from "./excelUtil";
 import { MetadataTagsIncluded } from '../constants/appConstants';
 
 export class TaskHelper {  
-    excelHelper = new ExcelHelper();         
+    excelHelper = new ExcelUtil();         
 
     /**
      * Get the column position of the supplied key from the list of metatags data

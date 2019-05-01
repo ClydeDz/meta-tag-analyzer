@@ -3,14 +3,14 @@ import {Workbook, Row, Cell, Worksheet} from 'exceljs';
 
 import { TaskHelper } from "./utilities/taskHelper";
 import { ConsoleUtil } from "./utilities/consoleUtil";
-import { ExcelHelper } from "./utilities/excelHelper";
+import { ExcelUtil } from "./utilities/excelUtil";
 import { AppConstants } from "./constants/appConstants";
 
 async function run() {
     console.time("Execution time");
     const taskHelper = new TaskHelper();   
     const consoleHelper = new ConsoleUtil();  
-    const excelHelper = new ExcelHelper();     
+    const excelHelper = new ExcelUtil();     
     const appConstants = new AppConstants();   
 
     try {
