@@ -2,14 +2,14 @@ import * as tl from 'azure-pipelines-task-lib/task';
 import {Workbook, Row, Cell, Worksheet} from 'exceljs';
 
 import { TaskHelper } from "./utilities/taskHelper";
-import { ConsoleHelper } from "./utilities/consoleHelper";
+import { ConsoleUtil } from "./utilities/consoleUtil";
 import { ExcelHelper } from "./utilities/excelHelper";
 import { AppConstants } from "./constants/appConstants";
 
 async function run() {
     console.time("Execution time");
     const taskHelper = new TaskHelper();   
-    const consoleHelper = new ConsoleHelper();  
+    const consoleHelper = new ConsoleUtil();  
     const excelHelper = new ExcelHelper();     
     const appConstants = new AppConstants();   
 

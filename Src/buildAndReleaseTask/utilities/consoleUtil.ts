@@ -1,6 +1,6 @@
 import { AppConstants } from "../constants/appConstants";
 
-export class ConsoleHelper {
+export class ConsoleUtil {
     appConstants = new AppConstants();   
 
     /**
