@@ -145,7 +145,7 @@ describe('utilities / taskUtil / getMetadataTagPosition', function () {
 
 //_________________________________________________________________________________
 
-describe('utilities / TaskUtil / isKeyUnderNameAttrCategory', function () {
+describe('utilities / taskUtil / isKeyUnderNameAttrCategory', function () {
     it('should true for name-attribute tags', function(done: MochaDone) {   
         const taskUtil = new TaskUtil();
         const appConstants = new AppConstants();
