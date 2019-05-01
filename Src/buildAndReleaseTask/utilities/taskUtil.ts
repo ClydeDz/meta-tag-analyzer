@@ -5,7 +5,7 @@ import * as domino from 'domino';
 import { ExcelUtil } from "./excelUtil";
 import { MetadataTagsIncluded } from '../constants/appConstants';
 
-export class TaskHelper {  
+export class TaskUtil {  
     excelHelper = new ExcelUtil();         
 
     /**
