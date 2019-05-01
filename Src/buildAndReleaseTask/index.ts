@@ -1,5 +1,5 @@
 import * as tl from 'azure-pipelines-task-lib/task';
-import {Workbook, Row, Cell, Worksheet} from 'exceljs';
+import { Workbook } from 'exceljs';
 
 import { TaskUtil } from "./utilities/taskUtil";
 import { ConsoleUtil } from "./utilities/consoleUtil";

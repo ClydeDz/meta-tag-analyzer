@@ -1,5 +1,5 @@
-import {Workbook, Row, Cell, Worksheet} from 'exceljs';
-import * as WebRequest from 'web-request'; 
+import { Worksheet } from 'exceljs';
+import * as WebRequest from 'web-request';
 import * as domino from 'domino'; 
 
 import { ExcelUtil } from "./excelUtil";
