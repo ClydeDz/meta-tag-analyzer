@@ -1,32 +1,32 @@
 export class MetadataTagsIncluded {
-    key:            string;
-    displayText:    string;
+    key: string;
+    displayText: string;
     columnPosition: number;
-    category:       string;
+    category: string;
 
-    constructor(name: string, displayText: string, columnPosition:number, category: string) {
+    constructor(name: string, displayText: string, columnPosition: number, category: string) {
         this.key = name;
         this.columnPosition = columnPosition;
         this.displayText = displayText;
         this.category = category;
-    } 
-    
+    }
+
 }
 
-export class AppConstants{
+export class AppConstants {
 
-    readonly reportWorksheetName:string = "Meta Data Analysis";
-    readonly warningCellColor:string = "FFFF8C00";
-    readonly alertCellColor:string = "FFFF6347";
-    readonly highlightCellColor:string = "FFFFFF00";
-    readonly copyrightText:string = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
+    readonly reportWorksheetName: string = "Meta Data Analysis";
+    readonly warningCellColor: string = "FFFF8C00";
+    readonly alertCellColor: string = "FFFF6347";
+    readonly highlightCellColor: string = "FFFFFF00";
+    readonly copyrightText: string = "Meta Tag Analyzer (c) 2019 Clyde D'Souza";
 
     /**
      * Returns a list of metadata tags the is included in the report along with other details
      * useful for generating a report
      */
-    getMetadataTagsIncluded() : Array<MetadataTagsIncluded> {
-        var metadataElements = new Array<MetadataTagsIncluded>(); 
+    getMetadataTagsIncluded(): Array<MetadataTagsIncluded> {
+        var metadataElements = new Array<MetadataTagsIncluded>();
         var columnPosition = 1;
 
         // Essentials
@@ -44,10 +44,10 @@ export class AppConstants{
         metadataElements.push(new MetadataTagsIncluded("og:title-length", "Open-graph title length", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:description", "Open-graph description", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:description-length", "Open-graph description length", ++columnPosition, 'propertyAttr'));
-        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", ++columnPosition, 'propertyAttr'));        
+        metadataElements.push(new MetadataTagsIncluded("og:type", "Open-graph type", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:site_name", "Site name", ++columnPosition, 'propertyAttr'));
         metadataElements.push(new MetadataTagsIncluded("og:locale", "Language", ++columnPosition, 'propertyAttr'));
-        
+
         // Twitter specific
         metadataElements.push(new MetadataTagsIncluded("twitter:card", "Twitter card type", ++columnPosition, 'nameAttr'));
         metadataElements.push(new MetadataTagsIncluded("twitter:site", "@username of website", ++columnPosition, 'nameAttr'));
@@ -60,8 +60,8 @@ export class AppConstants{
         metadataElements.push(new MetadataTagsIncluded("h1", "H1 element", ++columnPosition, 'tagElement'));
         metadataElements.push(new MetadataTagsIncluded("h1-length", "H1 length", ++columnPosition, 'tagElement'));
         metadataElements.push(new MetadataTagsIncluded("h1-number", "Number of H1 tags found", ++columnPosition, 'tagElement'));
-        
+
         return metadataElements;
-    }  
+    }
 }
 

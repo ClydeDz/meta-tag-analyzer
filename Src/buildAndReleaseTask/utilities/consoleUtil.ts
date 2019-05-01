@@ -1,13 +1,13 @@
 import { AppConstants } from "../constants/appConstants";
 
 export class ConsoleUtil {
-    appConstants = new AppConstants();   
+    appConstants = new AppConstants();
 
     /**
      * Prints supplied URL on the console
      * @param url URL to be printed
-     */  
-    printPageURL(url: string){
+     */
+    printPageURL(url: string) {
         console.log("");
         console.log("----------------------------------");
         console.log("URL:", url);
@@ -18,7 +18,7 @@ export class ConsoleUtil {
      * Prints the supplied sitemap URL on the console
      * @param url URL of the sitemap file
      */
-    printSitemapFileURL(url: string){
+    printSitemapFileURL(url: string) {
         console.log("");
         console.log("==================================================");
         console.log('Sitemap file:', url);
@@ -28,9 +28,9 @@ export class ConsoleUtil {
     /**
      * Prints a copyright message on the console
      */
-    printConsoleCopyright(){
-        console.log(); 
-        console.log(this.appConstants.copyrightText); 
-        console.log(); 
-    } 
+    printConsoleCopyright() {
+        console.log();
+        console.log(this.appConstants.copyrightText);
+        console.log();
+    }
 }
