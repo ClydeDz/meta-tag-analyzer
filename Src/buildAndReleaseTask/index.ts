@@ -15,8 +15,8 @@ async function run() {
 
     try {
         // Task inputs
-        const sitemapURL: string = tl.getInput('sitemapURL', true);
-        const outputFilename: string = tl.getInput('outputFilename', false);
+        const sitemapURL: string | undefined = tl.getInput('sitemapURL', true);
+        const outputFilename: string | undefined = tl.getInput('outputFilename', false);
         var reportFilename = outputFilename;
 
         consoleUtil.printConsoleCopyright();

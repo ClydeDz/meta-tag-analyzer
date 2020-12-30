@@ -18,7 +18,7 @@ export class ConsoleUtil {
      * Prints the supplied sitemap URL on the console
      * @param url URL of the sitemap file
      */
-    printSitemapFileURL(url: string) {
+    printSitemapFileURL(url: string | undefined) {
         console.log("");
         console.log("==================================================");
         console.log('Sitemap file:', url);

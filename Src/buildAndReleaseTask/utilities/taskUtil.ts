@@ -4,6 +4,7 @@ import * as domino from 'domino';
 
 import { ExcelUtil } from "./excelUtil";
 import { MetadataTagsIncluded } from '../constants/appConstants';
+import { domainToASCII } from 'url';
 
 export class TaskUtil {
     excelUtil = new ExcelUtil();
@@ -26,9 +27,9 @@ export class TaskUtil {
      * Validates if the sitemap URL supplied is of a valid format
      * @param sitemapURL The sitemap URL
      */
-    isSitemapURLValid(sitemapURL: string): boolean {
-        var isValidURL = this._isURLValid(sitemapURL);
-        return isValidURL ? sitemapURL.endsWith('.xml') : isValidURL;
+    isSitemapURLValid(sitemapURL: string | undefined): boolean {
+        const isValidURL: boolean = sitemapURL === undefined || this._isURLValid(sitemapURL);
+        return isValidURL ? sitemapURL!.endsWith('.xml') : isValidURL;
     };
 
     /**
@@ -72,7 +73,10 @@ export class TaskUtil {
      * Makes a request to the supplied URL and creates a virtual document 
      * @param url URL whose contents you want to fetch
      */
-    async fetchURLAndLoadVirtualDocument(url: string): Promise<Document> {
+    async fetchURLAndLoadVirtualDocument(url: string | undefined): Promise<Document> {
+        if(!url) {
+            return domino.createWindow("<p>Invalid URL</p>").document;
+        }
         var currentURLXHRResult = await WebRequest.get(url);
         return domino.createWindow(currentURLXHRResult.content).document;
     }
@@ -81,10 +85,12 @@ export class TaskUtil {
      * Validates if the filename supplied is of a valid format
      * @param filename Filename supplied by the user
      */
-    isOutputFilenameValid(filename: string): boolean {
-        if (filename == null || filename == "") return false;
+    isOutputFilenameValid(filename: string | undefined): boolean {
+        if (!filename) {
+            return false;
+        }
 
-        var invalidFilename = filename.indexOf('.xlsx') >= 0 || filename.indexOf('.xls') >= 0;
+        const invalidFilename: boolean = filename.indexOf('.xlsx') >= 0 || filename.indexOf('.xls') >= 0;
         return !invalidFilename;
     }
 
@@ -92,8 +98,10 @@ export class TaskUtil {
      * Handles invalid or blank filename and returns a valid filename instead
      * @param filename Filename supplied by the user
      */
-    getTransformedInvalidOutputFilename(filename: string | null): string {
-        if (filename == null || filename == "") return "<input was left blank>";
+    getTransformedInvalidOutputFilename(filename: string | null | undefined): string {
+        if (!filename) {
+            return "<input was left blank or was not defined>";
+        }
 
         return filename;
     }
