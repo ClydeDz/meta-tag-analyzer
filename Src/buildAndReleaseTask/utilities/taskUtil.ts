@@ -71,7 +71,7 @@ export class TaskUtil {
     }
 
     /**
-     * Makes a request to the supplied URL and creates a virtual document 
+     * Makes a request to the supplied URL and creates a virtual document
      * @param url URL whose contents you want to fetch
      */
     async fetchURLAndLoadVirtualDocument(url: string | undefined): Promise<Document> {
@@ -139,7 +139,7 @@ export class TaskUtil {
      * @param metaElements List of metatags included in the report
      * @param metaTag The metatag HTML element in context
      * @param worksheet The worksheet that this report is being written to
-     * @param rowCounter Row number to write content 
+     * @param rowCounter Row number to write content
      */
     processNameMetaTags(nameAttribute: string, metaElements: MetadataTagsIncluded[],
         metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {
@@ -180,7 +180,7 @@ export class TaskUtil {
      * @param metaElements List of metatags included in the report
      * @param metaTag The metatag HTML element in context
      * @param worksheet The worksheet that this report is being written to
-     * @param rowCounter Row number to write content 
+     * @param rowCounter Row number to write content
      */
     processPropertyMetaTags(propertyAttribute: string, metaElements: MetadataTagsIncluded[],
         metaTag: HTMLMetaElement, worksheet: Worksheet, rowCounter: number): Worksheet {

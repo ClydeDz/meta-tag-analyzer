@@ -35,7 +35,7 @@ async function run(): Promise<void> {
 
         consoleUtil.printSitemapFileURL(sitemapURL);
 
-        const virtualDocument: Document = await taskUtil.fetchURLAndLoadVirtualDocument(sitemapURL);
+        const sitemapVirtualDocument: Document = await taskUtil.fetchURLAndLoadVirtualDocument(sitemapURL);
         const metaElements: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
         // create EXCEL file and add first static row
@@ -47,7 +47,7 @@ async function run(): Promise<void> {
         let rowCounter: number = appConstants.startingRowNumber;
 
         // a valid sitemap file needs to have the <loc> tag
-        const allPagesInSitemap: NodeListOf<Element> = virtualDocument.querySelectorAll("loc");
+        const allPagesInSitemap: NodeListOf<Element> = sitemapVirtualDocument.querySelectorAll("loc");
 
         // loop thru all pages found in the sitemap file
         for (let i = 0; i < allPagesInSitemap.length; i++) {
@@ -123,7 +123,7 @@ async function run(): Promise<void> {
             rowCounter++;
         }
 
-        worksheet = excelUtil.addExcelFooter(worksheet, ++rowCounter);
+        excelUtil.addExcelFooter(worksheet, ++rowCounter);
         wb.creator = "Clyde D'Souza";
         wb.lastModifiedBy = "Clyde D'Souza";
         wb.created = new Date();
