@@ -1,4 +1,4 @@
-import { Worksheet } from "exceljs";
+import { Cell, Worksheet } from "exceljs";
 import { MetadataTagsIncluded, AppConstants } from "../constants/appConstants";
 
 export class ExcelUtil {
@@ -10,7 +10,7 @@ export class ExcelUtil {
      * @param allMetaTags The list of metatags included in the report
      */
     addExcelHeader(workingSheet: Worksheet, allMetaTags: MetadataTagsIncluded[]): Worksheet {
-        const cellA1 = workingSheet.getRow(1).getCell(1);
+        const cellA1: Cell = workingSheet.getRow(1).getCell(1);
         cellA1.value = "URL";
         cellA1.fill = {
             type: "pattern",
@@ -22,7 +22,7 @@ export class ExcelUtil {
         };
 
         for (let si = 0; si < allMetaTags.length; si++) {
-            const cell = workingSheet.getRow(1).getCell(allMetaTags[si].columnPosition);
+            const cell: Cell = workingSheet.getRow(1).getCell(allMetaTags[si].columnPosition);
             cell.value = allMetaTags[si].displayText;
             cell.fill = {
                 type: "pattern",
@@ -44,14 +44,14 @@ export class ExcelUtil {
     addExcelFooter(workingSheet: Worksheet, row: number): Worksheet {
         // legend
         workingSheet.getRow(++row).getCell(1).value = "Legend:";
-        const legendCell1 = workingSheet.getRow(++row).getCell(1);
+        const legendCell1: Cell = workingSheet.getRow(++row).getCell(1);
         legendCell1.value = "Over ideal limit";
         legendCell1.fill = {
             type: "pattern",
             pattern: "solid",
             fgColor: { argb: this.appConstants.warningCellColor }
         };
-        const legendCell2 = workingSheet.getRow(row).getCell(2);
+        const legendCell2: Cell = workingSheet.getRow(row).getCell(2);
         legendCell2.value = "No data when required";
         legendCell2.fill = {
             type: "pattern",
