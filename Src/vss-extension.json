@@ -68,6 +68,9 @@
         },
         "issues": {
             "uri": "https://github.com/ClydeDz/meta-tag-analyzer/issues"
+        },
+        "privacypolicy": {
+            "uri": "https://github.com/ClydeDz/visualstudio-marketplace/blob/main/PRIVACY.md"
         }
     },
     "contributions": [
