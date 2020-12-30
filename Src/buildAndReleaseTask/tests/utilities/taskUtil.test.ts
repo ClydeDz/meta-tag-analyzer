@@ -7,7 +7,7 @@ describe("utilities / taskUtil / isSitemapURLValid", function (): void {
         this.timeout(1000);
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var isValidURL: boolean = taskUtil.isSitemapURLValid(
+        let isValidURL: boolean = taskUtil.isSitemapURLValid(
             "https://raw.githubusercontent.com/ClydeDz/meta-tag-analyzer/master/Sample/sitemap.xml");
         assert.strictEqual(isValidURL, true, "should have succeeded");
         isValidURL = taskUtil.isSitemapURLValid("https://profilesticker.net/sitemap.xml");
@@ -20,7 +20,7 @@ describe("utilities / taskUtil / isSitemapURLValid", function (): void {
         this.timeout(1000);
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var isValidURL: boolean = taskUtil.isSitemapURLValid(
+        let isValidURL: boolean = taskUtil.isSitemapURLValid(
             "https://raw.githubusercontent.com/ClydeDz/meta-tag-analyzer/");
         assert.strictEqual(isValidURL, false, "should have succeeded");
         isValidURL = taskUtil.isSitemapURLValid("https://profilesticker.net/sitemap.txt");
@@ -35,7 +35,7 @@ describe("utilities / taskUtil / isPageURLValid", function (): void {
         this.timeout(1000);
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var isValidURL: boolean = taskUtil.isPageURLValid("https://clydedz.github.io/sass-snippet-pack/");
+        let isValidURL: boolean = taskUtil.isPageURLValid("https://clydedz.github.io/sass-snippet-pack/");
         assert.strictEqual(isValidURL, true, "should have succeeded");
         isValidURL = taskUtil.isPageURLValid("https://profilesticker.net/about");
         assert.strictEqual(isValidURL, true, "should have succeeded");
@@ -47,7 +47,7 @@ describe("utilities / taskUtil / isPageURLValid", function (): void {
         this.timeout(1000);
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var isValidURL: boolean = taskUtil.isPageURLValid("https://clydedz.github.io/sass-snippet-pack/content.pdf");
+        let isValidURL: boolean = taskUtil.isPageURLValid("https://clydedz.github.io/sass-snippet-pack/content.pdf");
         assert.strictEqual(isValidURL, false, "should have succeeded");
         isValidURL = taskUtil.isPageURLValid("https://profilesticker.net/dummy.pdf");
         assert.strictEqual(isValidURL, false, "should have succeeded");
@@ -61,7 +61,7 @@ describe("utilities / taskUtil / isOutputFilenameValid", function (): void {
         this.timeout(1000);
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var isValidFilename: boolean = taskUtil.isOutputFilenameValid("meta-report");
+        let isValidFilename: boolean = taskUtil.isOutputFilenameValid("meta-report");
         assert.strictEqual(isValidFilename, true, "should have succeeded");
         isValidFilename = taskUtil.isOutputFilenameValid("meta report post release pipeline");
         assert.strictEqual(isValidFilename, true, "should have succeeded");
@@ -74,7 +74,7 @@ describe("utilities / taskUtil / isOutputFilenameValid", function (): void {
         this.timeout(1000);
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var isValidFilename: boolean = taskUtil.isOutputFilenameValid("");
+        let isValidFilename: boolean = taskUtil.isOutputFilenameValid("");
         assert.strictEqual(isValidFilename, false, "should have succeeded");
         isValidFilename = taskUtil.isOutputFilenameValid("report.xlsx");
         assert.strictEqual(isValidFilename, false, "should have succeeded");
@@ -92,7 +92,7 @@ describe("utilities / taskUtil / getTransformedInvalidOutputFilename", function 
     it("should return transformed filename when filename is null or empty", function (done: Mocha.Done): void {
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var transformedFilename: string = taskUtil.getTransformedInvalidOutputFilename("");
+        let transformedFilename: string = taskUtil.getTransformedInvalidOutputFilename("");
         assert.strictEqual(transformedFilename, "<input was left blank or was not defined>",
             "should be <input was left blank or was not defined>");
         transformedFilename = taskUtil.getTransformedInvalidOutputFilename(null);
@@ -103,7 +103,7 @@ describe("utilities / taskUtil / getTransformedInvalidOutputFilename", function 
     it("should return transformed filename when a valid filename is passed", function (done: Mocha.Done): void {
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var transformedFilename: string = taskUtil.getTransformedInvalidOutputFilename("meta report");
+        const transformedFilename: string = taskUtil.getTransformedInvalidOutputFilename("meta report");
         assert.strictEqual(transformedFilename, "meta report", "should be meta report");
         done();
     });
@@ -115,7 +115,7 @@ describe("utilities / taskUtil / getMetadataTagPosition", function (): void {
         const appConstants: AppConstants = new AppConstants();
         const metatags: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        var position: number = taskUtil.getMetadataTagPosition("title-tag", metatags);
+        let position: number = taskUtil.getMetadataTagPosition("title-tag", metatags);
         assert.strictEqual(position, 2, "should be 2");
         position = taskUtil.getMetadataTagPosition("description", metatags);
         assert.strictEqual(position, 4, "should be 4");
@@ -126,7 +126,7 @@ describe("utilities / taskUtil / getMetadataTagPosition", function (): void {
         const appConstants: AppConstants = new AppConstants();
         const metatags: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        var position: number = taskUtil.getMetadataTagPosition("script", metatags);
+        let position: number = taskUtil.getMetadataTagPosition("script", metatags);
         assert.strictEqual(position, 0, "should be 0");
         position = taskUtil.getMetadataTagPosition("", metatags);
         assert.strictEqual(position, 0, "should be 0");
@@ -140,7 +140,7 @@ describe("utilities / taskUtil / isKeyUnderNameAttrCategory", function (): void 
         const appConstants: AppConstants = new AppConstants();
         const metatags: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        var actual: boolean = taskUtil.isKeyUnderNameAttrCategory("title", metatags);
+        let actual: boolean = taskUtil.isKeyUnderNameAttrCategory("title", metatags);
         assert.strictEqual(actual, true, "should be true");
         actual = taskUtil.isKeyUnderNameAttrCategory("twitter:creator", metatags);
         assert.strictEqual(actual, true, "should be true");
@@ -151,7 +151,7 @@ describe("utilities / taskUtil / isKeyUnderNameAttrCategory", function (): void 
         const appConstants: AppConstants = new AppConstants();
         const metatags: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        var actual: boolean = taskUtil.isKeyUnderNameAttrCategory("script", metatags);
+        let actual: boolean = taskUtil.isKeyUnderNameAttrCategory("script", metatags);
         assert.strictEqual(actual, false, "should be 0");
         actual = taskUtil.isKeyUnderNameAttrCategory("", metatags);
         assert.strictEqual(actual, false, "should be 0");
@@ -167,7 +167,7 @@ describe("utilities / taskUtil / isKeyUnderPropertyAttrCategory", function (): v
         const appConstants: AppConstants = new AppConstants();
         const metatags: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        var actual: boolean = taskUtil.isKeyUnderPropertyAttrCategory("og:description", metatags);
+        let actual: boolean = taskUtil.isKeyUnderPropertyAttrCategory("og:description", metatags);
         assert.strictEqual(actual, true, "should be true");
         actual = taskUtil.isKeyUnderPropertyAttrCategory("fb:app_id", metatags);
         assert.strictEqual(actual, true, "should be true");
@@ -178,7 +178,7 @@ describe("utilities / taskUtil / isKeyUnderPropertyAttrCategory", function (): v
         const appConstants: AppConstants = new AppConstants();
         const metatags: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        var actual: boolean = taskUtil.isKeyUnderPropertyAttrCategory("Keywords", metatags);
+        let actual: boolean = taskUtil.isKeyUnderPropertyAttrCategory("Keywords", metatags);
         assert.strictEqual(actual, false, "should be 0");
         actual = taskUtil.isKeyUnderPropertyAttrCategory("", metatags);
         assert.strictEqual(actual, false, "should be 0");
@@ -192,7 +192,7 @@ describe("utilities / taskUtil / getMaxLengthOfMetatag", function (): void {
     it("should return correct length for meta tags", function (done: Mocha.Done): void {
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var maxLength: number = taskUtil.getMaxLengthOfMetatag("h1");
+        let maxLength: number = taskUtil.getMaxLengthOfMetatag("h1");
         assert.strictEqual(maxLength, 70, "should be 70");
         maxLength = taskUtil.getMaxLengthOfMetatag("og:title");
         assert.strictEqual(maxLength, 60, "should be 60");
@@ -203,7 +203,7 @@ describe("utilities / taskUtil / getMaxLengthOfMetatag", function (): void {
     it("should return 0 for meta tags not requiring a length check or invalid input", function (done: Mocha.Done): void {
         const taskUtil: TaskUtil = new TaskUtil();
 
-        var maxLength: number = taskUtil.getMaxLengthOfMetatag("");
+        let maxLength: number = taskUtil.getMaxLengthOfMetatag("");
         assert.strictEqual(maxLength, 0, "should be 0");
         maxLength = taskUtil.getMaxLengthOfMetatag("twitter:site");
         assert.strictEqual(maxLength, 0, "should be 0");

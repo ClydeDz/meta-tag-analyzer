@@ -1,10 +1,9 @@
-import { Worksheet } from 'exceljs';
-import * as WebRequest from 'web-request';
-import * as domino from 'domino';
+import { Worksheet } from "exceljs";
+import * as WebRequest from "web-request";
+import * as domino from "domino";
 
 import { ExcelUtil } from "./excelUtil";
-import { MetadataTagsIncluded } from '../constants/appConstants';
-import { domainToASCII } from 'url';
+import { MetadataTagsIncluded } from "../constants/appConstants";
 
 export class TaskUtil {
     excelUtil = new ExcelUtil();
@@ -15,7 +14,7 @@ export class TaskUtil {
      * @param allMetaTags List of all metatags included in the report
      */
     getMetadataTagPosition(search: string, allMetaTags: MetadataTagsIncluded[]): number {
-        for (var si = 0; si < allMetaTags.length; si++) {
+        for (let si = 0; si < allMetaTags.length; si++) {
             if (search == allMetaTags[si].key) {
                 return allMetaTags[si].columnPosition;
             }
@@ -28,18 +27,20 @@ export class TaskUtil {
      * @param sitemapURL The sitemap URL
      */
     isSitemapURLValid(sitemapURL: string | undefined): boolean {
-        const isValidURL: boolean = sitemapURL === undefined || this._isURLValid(sitemapURL);
-        return isValidURL ? sitemapURL!.endsWith('.xml') : isValidURL;
-    };
+        if (!sitemapURL || !this._isURLValid(sitemapURL)) {
+            return false;
+        }
+        return sitemapURL.endsWith(".xml");
+    }
 
     /**
      * Validates if the URL supplied is of a valid format
      * @param pageURL The URL of the publicly accessible page
      */
     isPageURLValid(pageURL: string): boolean {
-        var isValidURL = this._isURLValid(pageURL);
-        return isValidURL ? !pageURL.endsWith('.pdf') : isValidURL;
-    };
+        const isValidURL = this._isURLValid(pageURL);
+        return isValidURL ? !pageURL.endsWith(".pdf") : isValidURL;
+    }
 
     /**
      * Returns true if the key supplied is of the category 'nameAttr'
@@ -47,13 +48,13 @@ export class TaskUtil {
      * @param allMetaTags List of all metatags included in the report
      */
     isKeyUnderNameAttrCategory(key: string, allMetaTags: MetadataTagsIncluded[]): boolean {
-        for (var si = 0; si < allMetaTags.length; si++) {
+        for (let si = 0; si < allMetaTags.length; si++) {
             if (key == allMetaTags[si].key && allMetaTags[si].category == "nameAttr") {
                 return true;
             }
         }
         return false;
-    };
+    }
 
     /**
      * Returns true if the key supplied is of the category 'propertyAttr'
@@ -61,23 +62,23 @@ export class TaskUtil {
      * @param allMetaTags List of all metatags included in the report
      */
     isKeyUnderPropertyAttrCategory(key: string, allMetaTags: MetadataTagsIncluded[]): boolean {
-        for (var si = 0; si < allMetaTags.length; si++) {
+        for (let si = 0; si < allMetaTags.length; si++) {
             if (key == allMetaTags[si].key && allMetaTags[si].category == "propertyAttr") {
                 return true;
             }
         }
         return false;
-    };
+    }
 
     /**
      * Makes a request to the supplied URL and creates a virtual document 
      * @param url URL whose contents you want to fetch
      */
     async fetchURLAndLoadVirtualDocument(url: string | undefined): Promise<Document> {
-        if(!url) {
+        if (!url) {
             return domino.createWindow("<p>Invalid URL</p>").document;
         }
-        var currentURLXHRResult = await WebRequest.get(url);
+        const currentURLXHRResult = await WebRequest.get(url);
         return domino.createWindow(currentURLXHRResult.content).document;
     }
 
@@ -90,7 +91,7 @@ export class TaskUtil {
             return false;
         }
 
-        const invalidFilename: boolean = filename.indexOf('.xlsx') >= 0 || filename.indexOf('.xls') >= 0;
+        const invalidFilename: boolean = filename.indexOf(".xlsx") >= 0 || filename.indexOf(".xls") >= 0;
         return !invalidFilename;
     }
 
@@ -125,11 +126,11 @@ export class TaskUtil {
 
     /**
      * Validates the supplied URL
-     * @param userURL URL of the page 
+     * @param userURL URL of the page
      */
     _isURLValid(userURL: string): boolean {
         return /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i.test(userURL);
-    };
+    }
 
 
     //________________________Process tags_____________________________
@@ -148,13 +149,13 @@ export class TaskUtil {
             return worksheet;
         }
 
-        var nameAttributeContent = metaTag.getAttribute('content');
+        const nameAttributeContent = metaTag.getAttribute("content");
         if (nameAttributeContent == null) {
             return worksheet;
         }
 
         console.log("   ", "→", nameAttribute, "=", nameAttributeContent);
-        var position = this.getMetadataTagPosition(nameAttribute, metaElements);
+        const position = this.getMetadataTagPosition(nameAttribute, metaElements);
         worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
@@ -167,7 +168,7 @@ export class TaskUtil {
                 metaElements,
                 worksheet,
                 rowCounter,
-                'description-length',
+                "description-length",
                 this.getMaxLengthOfMetatag(nameAttribute),
                 "Length of description");
         }
@@ -188,13 +189,13 @@ export class TaskUtil {
             return worksheet;
         }
 
-        var propertyAttributeContent = metaTag.getAttribute('content');
+        const propertyAttributeContent = metaTag.getAttribute("content");
         if (propertyAttributeContent == null) {
             return worksheet;
         }
 
         console.log("   ", "→", propertyAttribute, "=", propertyAttributeContent);
-        var position = this.getMetadataTagPosition(propertyAttribute, metaElements);
+        const position = this.getMetadataTagPosition(propertyAttribute, metaElements);
         worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
@@ -208,7 +209,7 @@ export class TaskUtil {
                 metaElements,
                 worksheet,
                 rowCounter,
-                propertyAttribute + '-length',
+                propertyAttribute + "-length",
                 this.getMaxLengthOfMetatag(propertyAttribute),
                 "Length of " + propertyAttribute);
         }
@@ -228,7 +229,7 @@ export class TaskUtil {
         worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
-            this.getMetadataTagPosition('title-tag', metaElements),
+            this.getMetadataTagPosition("title-tag", metaElements),
             titleTagContent
         );
         worksheet = this.processTagLength(
@@ -236,8 +237,8 @@ export class TaskUtil {
             metaElements,
             worksheet,
             rowCounter,
-            'title-tag-length',
-            this.getMaxLengthOfMetatag('title-tag'),
+            "title-tag-length",
+            this.getMaxLengthOfMetatag("title-tag"),
             "Length of title tag");
         return worksheet;
     }
@@ -251,12 +252,12 @@ export class TaskUtil {
      * @param rowCounter Row number to write content  
      */
     processH1Tag(h1Tags: NodeListOf<HTMLHeadingElement>, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number): Worksheet {
-        var firstH1TagContent = h1Tags[0].innerHTML;
+        const firstH1TagContent = h1Tags[0].innerHTML;
         console.log("   ", "→", "H1", "=", firstH1TagContent);
         worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
-            this.getMetadataTagPosition('h1', metaElements),
+            this.getMetadataTagPosition("h1", metaElements),
             firstH1TagContent
         );
 
@@ -265,8 +266,8 @@ export class TaskUtil {
             metaElements,
             worksheet,
             rowCounter,
-            'h1-length',
-            this.getMaxLengthOfMetatag('h1'),
+            "h1-length",
+            this.getMaxLengthOfMetatag("h1"),
             "Length of H1 tag");
 
         worksheet = this.processTagLength(
@@ -274,7 +275,7 @@ export class TaskUtil {
             metaElements,
             worksheet,
             rowCounter,
-            'h1-number',
+            "h1-number",
             1,
             "Number of H1 tags");
 
@@ -292,11 +293,12 @@ export class TaskUtil {
      * @param maxLengthAllowed Max length allowed for the key supplied
      * @param consoleMessageForKey Message to be displayed in log for this tag
      */
-    processTagLength(tagContent: any, metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number,
+    processTagLength(tagContent: string | NodeListOf<HTMLHeadElement>,
+        metaElements: MetadataTagsIncluded[], worksheet: Worksheet, rowCounter: number,
         key: string, maxLengthAllowed: number, consoleMessageForKey: string): Worksheet {
 
         console.log("   ", "→", consoleMessageForKey, "=", tagContent.length);
-        let position = this.getMetadataTagPosition(key, metaElements);
+        const position = this.getMetadataTagPosition(key, metaElements);
         worksheet = this.excelUtil.addExcelCellContent(
             worksheet,
             rowCounter,
@@ -305,20 +307,20 @@ export class TaskUtil {
         );
 
         if (tagContent.length > maxLengthAllowed) {
-            let tagLengthCell = worksheet.getRow(rowCounter).getCell(position);
+            const tagLengthCell = worksheet.getRow(rowCounter).getCell(position);
             tagLengthCell.fill = {
-                type: 'pattern',
-                pattern: 'solid',
-                fgColor: { argb: 'FFFF8C00' }
+                type: "pattern",
+                pattern: "solid",
+                fgColor: { argb: "FFFF8C00" }
             };
         }
 
         if (tagContent.length == 0) {
-            let tagLengthCell = worksheet.getRow(rowCounter).getCell(position);
+            const tagLengthCell = worksheet.getRow(rowCounter).getCell(position);
             tagLengthCell.fill = {
-                type: 'pattern',
-                pattern: 'solid',
-                fgColor: { argb: 'FFFF6347' }
+                type: "pattern",
+                pattern: "solid",
+                fgColor: { argb: "FFFF6347" }
             };
         }
 

@@ -6,8 +6,8 @@ describe("index / run", function (): void {
 
     it("should succeed with simple inputs", function (done: Mocha.Done): void {
         this.timeout(150000);
-        let mockRunnerPath: string = path.join(__dirname, "mockRunners/success.js");
-        let mockTestRunner: ttm.MockTestRunner = new ttm.MockTestRunner(mockRunnerPath);
+        const mockRunnerPath: string = path.join(__dirname, "mockRunners/success.js");
+        const mockTestRunner: ttm.MockTestRunner = new ttm.MockTestRunner(mockRunnerPath);
         mockTestRunner.run(10);
         assert.strictEqual(mockTestRunner.succeeded, true, "should have succeeded");
         assert.strictEqual(mockTestRunner.warningIssues.length, 0, "should have no warnings");
@@ -18,8 +18,8 @@ describe("index / run", function (): void {
 
     it("should fail with no sitemap input", function (done: Mocha.Done): void {
         this.timeout(15000);
-        let mockRunnerPath: string = path.join(__dirname, "mockRunners/noSitemapFailure.js");
-        let mockTestRunner: ttm.MockTestRunner = new ttm.MockTestRunner(mockRunnerPath);
+        const mockRunnerPath: string = path.join(__dirname, "mockRunners/noSitemapFailure.js");
+        const mockTestRunner: ttm.MockTestRunner = new ttm.MockTestRunner(mockRunnerPath);
         mockTestRunner.run(10);
         assert.strictEqual(mockTestRunner.succeeded, false, "should have failed");
         assert.strictEqual(mockTestRunner.warningIssues.length, 0, "should have no warnings");
@@ -30,8 +30,8 @@ describe("index / run", function (): void {
 
     it("should fail with an invalid sitemap file input", function (done: Mocha.Done): void {
         this.timeout(15000);
-        let mockRunnerPath: string = path.join(__dirname, "mockRunners/invalidSitemapFailure.js");
-        let mockTestRunner: ttm.MockTestRunner = new ttm.MockTestRunner(mockRunnerPath);
+        const mockRunnerPath: string = path.join(__dirname, "mockRunners/invalidSitemapFailure.js");
+        const mockTestRunner: ttm.MockTestRunner = new ttm.MockTestRunner(mockRunnerPath);
         mockTestRunner.run(10);
         assert.strictEqual(mockTestRunner.succeeded, false, "should have failed");
         assert.strictEqual(mockTestRunner.warningIssues.length, 0, "should have no warnings");

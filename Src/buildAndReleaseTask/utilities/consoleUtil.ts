@@ -7,7 +7,7 @@ export class ConsoleUtil {
      * Prints supplied URL on the console
      * @param url URL to be printed
      */
-    printPageURL(url: string) {
+    printPageURL(url: string): void {
         console.log("");
         console.log("----------------------------------");
         console.log("URL:", url);
@@ -18,17 +18,17 @@ export class ConsoleUtil {
      * Prints the supplied sitemap URL on the console
      * @param url URL of the sitemap file
      */
-    printSitemapFileURL(url: string | undefined) {
+    printSitemapFileURL(url: string | undefined): void {
         console.log("");
         console.log("==================================================");
-        console.log('Sitemap file:', url);
+        console.log("Sitemap file:", url);
         console.log("==================================================");
     }
 
     /**
      * Prints a copyright message on the console
      */
-    printConsoleCopyright() {
+    printConsoleCopyright(): void {
         console.log();
         console.log(this.appConstants.copyrightText);
         console.log();
