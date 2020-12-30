@@ -123,7 +123,7 @@ async function run(): Promise<void> {
             rowCounter++;
         }
 
-        excelUtil.addExcelFooter(worksheet, ++rowCounter);
+        excelUtil.addExcelFooter(worksheet, rowCounter);
         wb.creator = "Clyde D'Souza";
         wb.lastModifiedBy = "Clyde D'Souza";
         wb.created = new Date();
