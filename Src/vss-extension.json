@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "meta-tag-analyzer",
     "name": "Meta Tag Analyzer",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "publisher": "clydedsouza",
     "public": true,
     "targets": [
@@ -35,7 +35,7 @@
     ],
     "content": {
         "details": {
-            "path": "Overview.md"
+            "path": "README.md"
         },
         "license": {
             "path": "LICENSE.md"
@@ -68,6 +68,9 @@
         },
         "issues": {
             "uri": "https://github.com/ClydeDz/meta-tag-analyzer/issues"
+        },
+        "privacypolicy": {
+            "uri": "https://github.com/ClydeDz/visualstudio-marketplace/blob/main/PRIVACY.md"
         }
     },
     "contributions": [

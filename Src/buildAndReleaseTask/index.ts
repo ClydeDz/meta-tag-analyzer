@@ -1,59 +1,59 @@
-import * as tl from 'azure-pipelines-task-lib/task';
-import { Workbook } from 'exceljs';
+import * as tl from "azure-pipelines-task-lib/task";
+import { Workbook, Worksheet } from "exceljs";
 
 import { TaskUtil } from "./utilities/taskUtil";
 import { ConsoleUtil } from "./utilities/consoleUtil";
 import { ExcelUtil } from "./utilities/excelUtil";
-import { AppConstants } from "./constants/appConstants";
+import { AppConstants, MetadataTagsIncluded } from "./constants/appConstants";
 
-async function run() {
+async function run(): Promise<void> {
     console.time("Execution time");
-    const taskUtil = new TaskUtil();
-    const consoleUtil = new ConsoleUtil();
-    const excelUtil = new ExcelUtil();
-    const appConstants = new AppConstants();
+    const taskUtil: TaskUtil = new TaskUtil();
+    const consoleUtil: ConsoleUtil = new ConsoleUtil();
+    const excelUtil: ExcelUtil = new ExcelUtil();
+    const appConstants: AppConstants = new AppConstants();
 
     try {
-        // Task inputs
-        const sitemapURL: string = tl.getInput('sitemapURL', true);
-        const outputFilename: string = tl.getInput('outputFilename', false);
-        var reportFilename = outputFilename;
+        const sitemapURL: string | undefined = tl.getInput("sitemapURL", true);
+        const outputFilename: string | undefined = tl.getInput("outputFilename", false);
+        let reportFilename: string | undefined = outputFilename;
 
         consoleUtil.printConsoleCopyright();
 
-        // Validate the URL
+        // validate the URL
         if (!taskUtil.isSitemapURLValid(sitemapURL)) {
-            tl.setResult(tl.TaskResult.Failed, 'Invalid sitemap URL detected');
+            tl.setResult(tl.TaskResult.Failed, "Invalid sitemap URL detected");
             return;
         }
 
-        // Validate the file name
+        // validate the file name
         if (!taskUtil.isOutputFilenameValid(outputFilename)) {
-            console.log("Filename", taskUtil.getTransformedInvalidOutputFilename(outputFilename), "was determined to be of an invalid file format. Default file name has been assigned to the output file.");
+            console.log("Filename", taskUtil.getTransformedInvalidOutputFilename(outputFilename),
+                "was determined to be of an invalid file format. Default file name has been assigned to the output file.");
             reportFilename = "meta-tag-analyzer-report";
         }
 
         consoleUtil.printSitemapFileURL(sitemapURL);
 
-        var virtualDocument = await taskUtil.fetchURLAndLoadVirtualDocument(sitemapURL);
-        const metaElements = appConstants.getMetadataTagsIncluded();
+        const sitemapVirtualDocument: Document = await taskUtil.fetchURLAndLoadVirtualDocument(sitemapURL);
+        const metaElements: MetadataTagsIncluded[] = appConstants.getMetadataTagsIncluded();
 
-        // Create EXCEL file and add first static row
-        var wb = new Workbook();
-        var worksheet = wb.addWorksheet(appConstants.reportWorksheetName);
+        // create EXCEL file and add first static row
+        const wb: Workbook = new Workbook();
+        let worksheet: Worksheet = wb.addWorksheet(appConstants.reportWorksheetName);
         worksheet = excelUtil.addExcelHeader(worksheet, metaElements);
 
-        // Row 1 is the header of the table, that's why we're starting from 2
-        var rowCounter = 2;
+        // row 1 is the header of the table, that's why we're starting from 2
+        let rowCounter: number = appConstants.startingRowNumber;
 
-        // A valid sitemap file needs to have the <loc> tag
-        var allPagesInSitemap = virtualDocument.querySelectorAll('loc');
+        // a valid sitemap file needs to have the <loc> tag
+        const allPagesInSitemap: NodeListOf<Element> = sitemapVirtualDocument.querySelectorAll("loc");
 
-        // Loop thru all pages found in the sitemap file
-        for (var i = 0; i < allPagesInSitemap.length; i++) {
-            var currentURL = allPagesInSitemap[i].innerHTML;
+        // loop thru all pages found in the sitemap file
+        for (let i = 0; i < allPagesInSitemap.length; i++) {
+            const currentURL: string = allPagesInSitemap[i].innerHTML;
 
-            // Check if we need to exclude URLs. Example: .pdf
+            // check if we need to exclude URLs. Example: .pdf
             if (!taskUtil.isPageURLValid(currentURL)) {
                 continue;
             }
@@ -61,22 +61,28 @@ async function run() {
             consoleUtil.printPageURL(currentURL);
             worksheet.getRow(rowCounter).getCell(1).value = currentURL;
             worksheet.getRow(rowCounter).getCell(1).fill = {
-                type: 'pattern',
-                pattern: 'solid',
-                fgColor: { argb: 'FFF0E68C' }
+                type: "pattern",
+                pattern: "solid",
+                fgColor: { argb: "FFF0E68C" }
             };
 
-            // Makes a request to the sitemap file and creates a virtual document
-            var virtualDocument = await taskUtil.fetchURLAndLoadVirtualDocument(currentURL);
+            // makes a request to the sitemap file and creates a virtual document
+            let virtualDocument: Document;
+            try {
+                virtualDocument = await taskUtil.fetchURLAndLoadVirtualDocument(currentURL);
+            } catch (err) {
+                console.log(`There was an issue with retrieving the contents from ${currentURL}. Please check the URL provided.`);
+                continue;
+            }
 
-            // Title tag
-            var titleTag = virtualDocument.querySelector('title');
+            // <title>
+            const titleTag: HTMLTitleElement | null = virtualDocument.querySelector("title");
             if (titleTag != null) {
                 worksheet = taskUtil.processTitleTag(titleTag.innerHTML, metaElements, worksheet, rowCounter);
             }
 
-            // H1 tag
-            var h1Tags = virtualDocument.querySelectorAll('h1');
+            // <h1>
+            const h1Tags: NodeListOf<HTMLHeadingElement> = virtualDocument.querySelectorAll("h1");
             if (h1Tags != null) {
                 worksheet = taskUtil.processH1Tag(
                     h1Tags,
@@ -85,31 +91,31 @@ async function run() {
                     rowCounter);
             }
 
-            // Loop thru all meta tags
-            var metaTags = virtualDocument.querySelectorAll('meta');
-            for (var im = 0; im < metaTags.length; im++) {
-                var nameAttribute = metaTags[im].getAttribute('name');
-                var propertyAttribute = metaTags[im].getAttribute('property');
-                var isNameMetatag = nameAttribute != "" && nameAttribute != null;
-                var isPropertyMetatag = propertyAttribute != "" && propertyAttribute != null;
+            // loop thru all meta tags
+            const metaTags: NodeListOf<HTMLMetaElement> = virtualDocument.querySelectorAll("meta");
+            for (let im = 0; im < metaTags.length; im++) {
+                const nameAttribute: string | null = metaTags[im].getAttribute("name");
+                const propertyAttribute: string | null = metaTags[im].getAttribute("property");
+                const isNameMetatag: boolean = nameAttribute !== "" && nameAttribute != null;
+                const isPropertyMetatag: boolean = propertyAttribute !== "" && propertyAttribute != null;
 
-                // Example: <meta name="description" content="Lorem ipsum">
+                // example: <meta name="description" content="Lorem ipsum">
                 if (isNameMetatag) {
                     if (nameAttribute == null) {
                         continue;
                     }
 
-                    // Filters only those meta tags we're interested in
+                    // filters only those meta tags we're interested in
                     worksheet = taskUtil.processNameMetaTags(nameAttribute, metaElements, metaTags[im], worksheet, rowCounter);
                 }
 
-                // Example: <meta property="og:type" content="website">
+                // example: <meta property="og:type" content="website">
                 if (isPropertyMetatag) {
                     if (propertyAttribute == null) {
                         continue;
                     }
 
-                    // Filters only those meta tags we're interested in
+                    // filters only those meta tags we're interested in
                     worksheet = taskUtil.processPropertyMetaTags(propertyAttribute, metaElements, metaTags[im], worksheet, rowCounter);
                 }
             }
@@ -117,25 +123,23 @@ async function run() {
             rowCounter++;
         }
 
-        worksheet = excelUtil.addExcelFooter(worksheet, ++rowCounter);
+        excelUtil.addExcelFooter(worksheet, rowCounter);
         wb.creator = "Clyde D'Souza";
         wb.lastModifiedBy = "Clyde D'Souza";
         wb.created = new Date();
-        wb.xlsx.writeFile('./' + reportFilename + '.xlsx');
+        wb.xlsx.writeFile(`./${reportFilename}.xlsx`);
         console.log();
-        console.log(reportFilename + '.xlsx created successfully.');
-    }
-    catch (err) {
+        console.log(reportFilename + ".xlsx created successfully.");
+    } catch (err) {
         console.log();
         tl.setResult(tl.TaskResult.Failed, err.message);
-    }
-    finally {
+    } finally {
         console.timeEnd("Execution time");
         console.log();
     }
 }
 
-// Start here
+// start here
 run();
 
 
