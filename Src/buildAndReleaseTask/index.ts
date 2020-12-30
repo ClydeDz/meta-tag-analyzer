@@ -67,7 +67,13 @@ async function run(): Promise<void> {
             };
 
             // makes a request to the sitemap file and creates a virtual document
-            const virtualDocument: Document = await taskUtil.fetchURLAndLoadVirtualDocument(currentURL);
+            let virtualDocument: Document;
+            try {
+                virtualDocument = await taskUtil.fetchURLAndLoadVirtualDocument(currentURL);
+            } catch (err) {
+                console.log(`There was an issue with retrieving the contents from ${currentURL}. Please check the URL provided.`);
+                continue;
+            }
 
             // <title>
             const titleTag: HTMLTitleElement | null = virtualDocument.querySelector("title");
