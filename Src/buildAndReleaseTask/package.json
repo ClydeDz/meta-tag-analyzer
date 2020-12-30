@@ -1,7 +1,7 @@
 {
   "name": "meta-tag-analyzer",
   "version": "1.0.0",
-  "description": "Placeholder description",
+  "description": "Generates a report after analysing the meta tags of each page on your website.",
   "main": "index.js",
   "author": "Clyde D'Souza",
   "license": "MIT",
