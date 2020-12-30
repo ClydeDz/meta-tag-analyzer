@@ -5,6 +5,8 @@ An Azure DevOps task that generates a report after analysing the meta tags of ea
 [![Azure DevOps tests](https://img.shields.io/azure-devops/tests/clydedsouza/Meta%2520Tag%2520Analyzer/21?logo=azure%20devops)](https://clydedsouza.visualstudio.com/Meta%20Tag%20Analyzer/_build/latest?definitionId=21) 
 [![Visual Studio Marketplace Installs - Azure DevOps Extension](https://img.shields.io/visual-studio-marketplace/azure-devops/installs/total/clydedsouza.meta-tag-analyzer.svg?color=brightgreen&logo=visual%20studio)](https://marketplace.visualstudio.com/items?itemName=clydedsouza.meta-tag-analyzer)
 [![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/clydedsouza.meta-tag-analyzer?color=brightgreen&logo=visual%20studio)](http://bit.ly/metataganalyzer) 
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ClydeDz_meta-tag-analyzer&metric=alert_status)](https://sonarcloud.io/dashboard?id=ClydeDz_meta-tag-analyzer) 
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ClydeDz_meta-tag-analyzer&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ClydeDz_meta-tag-analyzer) 
 ![MIT License](https://img.shields.io/static/v1.svg?label=📜%20License&message=MIT&color=informational)          
 
 ## What is Meta Tag Analyzer?
