@@ -13,9 +13,10 @@
     "web-request": "^1.0.7"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run lint && npm run compile",
+    "compile": "tsc",
     "test": "mocha tests/**/*.test.js --reporter mocha-junit-reporter --timeout 150000 --exit",
-    "devtest": "npm run build && mocha tests/**/*.test.js --timeout 150000",
+    "devtest": "npm run compile && mocha tests/**/*.test.js --timeout 150000",
     "lint": "eslint \"**\\*.ts\""
   },
   "devDependencies": {
