@@ -9,7 +9,7 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 2
+        "Patch": 3
     },
     "instanceNameFormat": "Run: Meta Tag Analyzer",
     "inputs": [
@@ -30,8 +30,9 @@
             "helpMarkDown": "Custom filename for the Meta Tag Analyzer report. Only type in the file name and not the file extension.    [More information](https://github.com/ClydeDz/meta-tag-analyzer/wiki#configuring-inputs)"
         }
     ],
+    "minimumAgentVersion": "2.144.0",
     "execution": {
-        "Node": {
+        "Node10": {
             "target": "index.js"
         }
     }
